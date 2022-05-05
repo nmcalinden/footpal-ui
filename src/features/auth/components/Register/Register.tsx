@@ -1,20 +1,34 @@
 import * as React from "react";
 import { Stack, Button, Link, TextField } from "@mui/material";
-import { LoginCredentialsDTO } from "../../api/login";
+import { RegisterCredentialsDTO } from "../../api/register";
 
-interface LoginProps {
-    loginUser: (data: LoginCredentialsDTO) => void;
-    openRegister: () => void;
+interface RegisterProps {
+    registerUser: (data: RegisterCredentialsDTO) => void;
+    openLogin: () => void;
     closeModal: () => void;
 }
 
-export default function Login({
-    loginUser,
-    openRegister,
+export default function Register({
+    registerUser,
+    openLogin,
     closeModal,
-}: LoginProps) {
+}: RegisterProps) {
+    const [firstName, setFirstName] = React.useState("");
+    const [surname, setSurname] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+
+    const handleFirstnameChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setFirstName(event.target.value);
+    };
+
+    const handleSurnameChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSurname(event.target.value);
+    };
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -26,8 +40,32 @@ export default function Login({
         setPassword(event.target.value);
     };
 
+    const handleRegister = () => {
+        const data: RegisterCredentialsDTO = {
+            forename: firstName,
+            surname,
+            email,
+            password,
+        };
+        registerUser(data);
+    };
+
     return (
         <>
+            <TextField
+                id="standard-first-name"
+                label="First Name"
+                value={firstName}
+                onChange={handleFirstnameChange}
+                variant="standard"
+            />
+            <TextField
+                id="standard-surname"
+                label="Surname"
+                value={surname}
+                onChange={handleSurnameChange}
+                variant="standard"
+            />
             <TextField
                 id="standard-email"
                 label="E-mail"
@@ -56,18 +94,18 @@ export default function Login({
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={() => loginUser({ email, password })}
+                    onClick={handleRegister}
                 >
-                    Login
+                    Register
                 </Button>
             </Stack>
             <Link
                 component="button"
                 variant="body2"
-                onClick={openRegister}
+                onClick={openLogin}
                 sx={{ marginTop: 5 }}
             >
-                REGISTER HERE
+                SIGN IN
             </Link>
         </>
     );

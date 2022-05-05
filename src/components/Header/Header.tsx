@@ -10,26 +10,33 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
-import Login from "@/features/auth/components/Login/Login";
 import { useAuth } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
+import SignIn from "@/features/auth/components/SignIn/SignIn";
 
 export const Header = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
-    const [openLogin, setOpenLogin] = React.useState(false);
+    const [openSignInModal, setOpenSignInModal] = React.useState(false);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
+    };
+
+    const handleOpenProfile = () => {
+        handleCloseUserMenu();
+        navigate("/profile", { replace: true });
     };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
-    const handleOpenLogin = () => setOpenLogin(true);
+    const handleOpenSignIn = () => setOpenSignInModal(true);
     const handleLogout = () => logout();
 
     const getSignIn = () => {
@@ -37,7 +44,7 @@ export const Header = () => {
             <Tooltip title="Sign In or Sign Up">
                 <Button
                     key={"sign-in"}
-                    onClick={handleOpenLogin}
+                    onClick={handleOpenSignIn}
                     sx={{
                         my: 2,
                         color: "white",
@@ -82,7 +89,7 @@ export const Header = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    <MenuItem key={"profile"}>
+                    <MenuItem key={"profile"} onClick={handleOpenProfile}>
                         <Typography textAlign="center">My Profile</Typography>
                     </MenuItem>
                     <MenuItem key={"logout"} onClick={handleLogout}>
@@ -127,8 +134,11 @@ export const Header = () => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         {user ? getLoggedIn() : getSignIn()}
-                        {openLogin && (
-                            <Login open={openLogin} setOpen={setOpenLogin} />
+                        {openSignInModal && (
+                            <SignIn
+                                open={openSignInModal}
+                                setOpen={setOpenSignInModal}
+                            />
                         )}
                     </Box>
                 </Toolbar>

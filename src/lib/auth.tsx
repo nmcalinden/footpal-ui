@@ -3,8 +3,10 @@ import { Spinner } from "@/components/Elements";
 import {
     getUserProfile,
     loginWithEmailAndPassword,
+    registerUser,
     UserSession,
     LoginCredentialsDTO,
+    RegisterCredentialsDTO,
     AuthUser,
 } from "@/features/auth";
 import storage from "@/utils/storage";
@@ -28,10 +30,9 @@ async function loginFn(data: LoginCredentialsDTO) {
     return user;
 }
 
-async function registerFn(data: LoginCredentialsDTO) {
-    const response = await loginWithEmailAndPassword(data);
-    const user = await handleUserResponse(response);
-    return user;
+async function registerFn(data: RegisterCredentialsDTO) {
+    await registerUser(data);
+    return null;
 }
 
 async function logoutFn() {
@@ -53,5 +54,5 @@ export const { AuthProvider, useAuth } = initReactQueryAuth<
     AuthUser | null,
     unknown,
     LoginCredentialsDTO,
-    LoginCredentialsDTO
+    RegisterCredentialsDTO
 >(authConfig);

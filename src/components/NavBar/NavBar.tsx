@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Tabs, Tab } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 
 function LinkTab(props: any) {
@@ -14,13 +14,19 @@ function tabProps(index: number) {
     };
 }
 
+const homeNavBar = ["/", "/book", "/venues"];
+const authNavBar = ["/", "/profile", "/book", "/venues", "/matches", "/squads"];
+
 export const NavBar = () => {
     const { user } = useAuth();
-    const [value, setValue] = React.useState(0);
+    const location = useLocation();
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const getTabValue = (path: string) => {
+        const tabs = user ? authNavBar : homeNavBar;
+        return tabs.indexOf(path);
     };
+
+    const value = getTabValue(location.pathname);
 
     const HomeNavBar = () => {
         return (
@@ -29,7 +35,6 @@ export const NavBar = () => {
                     orientation="vertical"
                     variant="standard"
                     value={value}
-                    onChange={handleChange}
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: "divider" }}
                 >
@@ -52,7 +57,6 @@ export const NavBar = () => {
                     orientation="vertical"
                     variant="standard"
                     value={value}
-                    onChange={handleChange}
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: "divider" }}
                 >

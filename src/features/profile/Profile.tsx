@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Grid, Tabs, Tab } from "@mui/material";
-import MyMatches from "@/features/matches/MyMatches";
+import { MyMatches } from "@/features/matches";
 import MySquads from "@/features/squads/MySquads";
 
 const Profile = () => {

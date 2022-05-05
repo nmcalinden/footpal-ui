@@ -70,7 +70,7 @@ const rows = [
     },
 ];
 
-const MyMatches = () => {
+export const MyMatches = () => {
     return (
         <Box
             sx={{
@@ -89,5 +89,3 @@ const MyMatches = () => {
         </Box>
     );
 };
-
-export default MyMatches;

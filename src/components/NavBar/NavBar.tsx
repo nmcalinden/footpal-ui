@@ -14,7 +14,7 @@ function tabProps(index: number) {
     };
 }
 
-const NavBar = () => {
+export const NavBar = () => {
     const { user } = useAuth();
     const [value, setValue] = React.useState(0);
 
@@ -85,5 +85,3 @@ const NavBar = () => {
 
     return user ? AuthNavBar() : HomeNavBar();
 };
-
-export default NavBar;

@@ -1,6 +1,6 @@
 import { Container, Box } from "@mui/material";
-import HeaderBar from "@/components/Head/Header";
-import NavBar from "@/components/NavBar/NavBar";
+import { Header } from "@/components/Header";
+import { NavBar } from "@/components/NavBar";
 import { TabContent } from "./ContentLayout";
 import styled from "@emotion/styled";
 
@@ -19,7 +19,7 @@ export const MainLayout = styled(Box)({
 export const AppLayout = ({ children }: AppLayoutProps) => {
     return (
         <Container className="App" maxWidth="xl">
-            <HeaderBar />
+            <Header />
             <MainLayout>
                 <NavBar />
                 <TabContent children={children} />

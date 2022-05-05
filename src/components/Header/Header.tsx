@@ -13,7 +13,7 @@ import {
 import Login from "@/features/auth/components/Login/Login";
 import { useAuth } from "@/lib/auth";
 
-const Header = () => {
+export const Header = () => {
     const { user, logout } = useAuth();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -136,5 +136,3 @@ const Header = () => {
         </AppBar>
     );
 };
-
-export default Header;

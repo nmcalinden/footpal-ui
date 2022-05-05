@@ -1,4 +1,3 @@
-import * as React from "react";
 import { initReactQueryAuth } from "react-query-auth";
 import { Spinner } from "@/components/Elements";
 import {

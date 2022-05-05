@@ -70,7 +70,7 @@ const rows = [
     },
 ];
 
-const MyGames = () => {
+const MyMatches = () => {
     return (
         <Box
             sx={{
@@ -90,4 +90,4 @@ const MyGames = () => {
     );
 };
 
-export default MyGames;
+export default MyMatches;

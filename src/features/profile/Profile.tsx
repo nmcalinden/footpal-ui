@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Grid, Tabs, Tab } from "@mui/material";
-import MyGames from "@/components/MyGames";
-import MySquads from "@/components/MySquads";
+import MyMatches from "@/features/matches/MyMatches";
+import MySquads from "@/features/squads/MySquads";
 
 const Profile = () => {
     const [value, setValue] = React.useState(0);
@@ -41,7 +41,7 @@ const Profile = () => {
                             <Tab label="My Bookings" />
                         </Tabs>
                     </Box>
-                    <MyGames />
+                    <MyMatches />
                 </Grid>
                 <Grid item xs={4} md={6} justifyContent="flex-end">
                     <h2>My Squad(s)</h2>

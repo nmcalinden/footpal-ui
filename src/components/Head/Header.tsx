@@ -13,7 +13,7 @@ import {
 import Login from "@/features/auth/components/Login/Login";
 import { useAuth } from "@/lib/auth";
 
-const HeaderBar = () => {
+const Header = () => {
     const { user, logout } = useAuth();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -82,7 +82,7 @@ const HeaderBar = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    <MenuItem key={"profile"} onClick={handleLogout}>
+                    <MenuItem key={"profile"}>
                         <Typography textAlign="center">My Profile</Typography>
                     </MenuItem>
                     <MenuItem key={"logout"} onClick={handleLogout}>
@@ -137,4 +137,4 @@ const HeaderBar = () => {
     );
 };
 
-export default HeaderBar;
+export default Header;

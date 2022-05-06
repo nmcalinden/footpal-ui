@@ -1,1 +1,2 @@
-export * from "./MySquads";
+export * from "./components/MySquads";
+export * from "./types";

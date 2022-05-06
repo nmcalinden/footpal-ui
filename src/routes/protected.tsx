@@ -20,7 +20,7 @@ export const protectedRoutes = [
             { path: "/venues", element: <div /> },
             { path: "/matches", element: <div /> },
             { path: "/squads", element: <div /> },
-            { path: "*", element: <Navigate to="." /> },
+            { path: "*", element: <Navigate to="/" /> },
         ],
     },
 ];

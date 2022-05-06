@@ -4,7 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 
 function LinkTab(props: any) {
-    return <Tab component={Link} to={props.pathname} {...props} />;
+    return (
+        <Tab
+            component={Link}
+            to={props.pathname}
+            {...props}
+            sx={{ width: "150px" }}
+        />
+    );
 }
 
 function tabProps(index: number) {

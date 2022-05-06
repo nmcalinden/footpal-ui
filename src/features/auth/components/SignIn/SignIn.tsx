@@ -5,7 +5,7 @@ import { SignInModal } from "./styled";
 import Login from "@/features/auth/components/Login/Login";
 import Register from "@/features/auth/components/Register/Register";
 import { LoginCredentialsDTO } from "@/features/auth/api/login";
-import { RegisterCredentialsDTO } from "../../api/register";
+import { RegisterCredentialsDTO } from "@/features/auth/api/register";
 
 interface SignInProps {
     open: boolean;

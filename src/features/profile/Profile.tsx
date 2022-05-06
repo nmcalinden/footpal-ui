@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Grid, Tabs, Tab } from "@mui/material";
 import { MyMatches } from "@/features/matches";
-import MySquads from "@/features/squads/MySquads";
+import { MySquads } from "@/features/squads/components/MySquads";
 
 const Profile = () => {
     const [value, setValue] = React.useState(0);
@@ -15,10 +15,12 @@ const Profile = () => {
                 <Grid item xs={10} md={12}>
                     <Box
                         sx={{
-                            bgcolor: "#dfebda",
+                            bgcolor: " #eeffe6",
                             display: "flex",
                             height: 60,
                             p: 2,
+                            borderBottom: 1,
+                            borderColor: "divider",
                         }}
                     >
                         <h1>My Profile</h1>
@@ -50,7 +52,7 @@ const Profile = () => {
                 <Grid item xs={4} md={6} justifyContent="flex-end">
                     <Box
                         sx={{
-                            bgcolor: "#dfebda",
+                            bgcolor: "   #eeffe6",
                             border: 1,
                             borderColor: "divider",
                             height: 275,

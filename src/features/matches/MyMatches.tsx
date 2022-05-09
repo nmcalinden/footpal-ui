@@ -78,6 +78,7 @@ export const MyMatches = () => {
                 bgcolor: "background.paper",
                 display: "flex",
                 height: 224,
+                marginTop: 2,
             }}
         >
             <DataGrid

@@ -10,11 +10,19 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
 import SignIn from "@/features/auth/components/SignIn/SignIn";
 
+const useStyles = makeStyles((theme) => ({
+    appBar: {
+        backgroundColor: theme.palette.primary.main,
+    },
+}));
+
 export const Header = () => {
+    const styles = useStyles();
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -101,7 +109,7 @@ export const Header = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" className={styles.appBar}>
             <Container maxWidth="xl">
                 <Toolbar
                     disableGutters

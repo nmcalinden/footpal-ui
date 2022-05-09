@@ -1,7 +1,13 @@
-import * as React from "react";
 import { Tabs, Tab } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    tabsIndicator: {
+        backgroundColor: theme.palette.secondary.light,
+    },
+}));
 
 function LinkTab(props: any) {
     return (
@@ -27,6 +33,7 @@ const authNavBar = ["/", "/profile", "/book", "/venues", "/matches", "/squads"];
 export const NavBar = () => {
     const { user } = useAuth();
     const location = useLocation();
+    const styles = useStyles();
 
     const getTabValue = (path: string) => {
         const tabs = user ? authNavBar : homeNavBar;
@@ -42,8 +49,10 @@ export const NavBar = () => {
                     orientation="vertical"
                     variant="standard"
                     value={value}
-                    aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: "divider" }}
+                    classes={{
+                        indicator: styles.tabsIndicator,
+                    }}
                 >
                     <LinkTab label="Home" pathname="/" {...tabProps(0)} />
                     <LinkTab label="Book" pathname="/book" {...tabProps(1)} />
@@ -66,6 +75,9 @@ export const NavBar = () => {
                     value={value}
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: "divider" }}
+                    classes={{
+                        indicator: styles.tabsIndicator,
+                    }}
                 >
                     <LinkTab label="Home" pathname="/" {...tabProps(0)} />
                     <LinkTab

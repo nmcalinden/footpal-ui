@@ -15,8 +15,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { SearchBarWrapper } from "./styled";
+import { useTheme } from "@material-ui/core/styles";
 
 const Home = () => {
+    const theme = useTheme();
     const [age, setAge] = React.useState("");
     const [value, setValue] = React.useState<Date | null>(new Date());
 
@@ -143,8 +145,14 @@ const Home = () => {
                         </SearchBarWrapper>
                         <Button
                             variant="contained"
-                            color="success"
-                            sx={{ marginTop: 1 }}
+                            sx={{
+                                marginTop: 1,
+                                bgcolor: `${theme.palette.primary.main}`,
+                                "&:hover": {
+                                    backgroundColor:
+                                        theme.palette.primary.light,
+                                },
+                            }}
                             endIcon={<SearchIcon />}
                         >
                             Search

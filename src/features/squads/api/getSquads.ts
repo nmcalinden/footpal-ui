@@ -13,10 +13,10 @@ type UseCommentsOptions = {
     config?: QueryConfig<QueryFnType>;
 };
 
-export const useSquads = ({ config }: UseCommentsOptions) => {
+export const useSquads = ({ config }: UseCommentsOptions = {}) => {
     return useQuery<ExtractFnReturnType<QueryFnType>>({
+        ...config,
         queryKey: ["squads"],
         queryFn: () => retrieveSquads(),
-        ...config,
     });
 };

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Link } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useSquads } from "@/features/squads/api/getSquads";
 import { Spinner } from "@/components/Elements";
@@ -29,13 +29,12 @@ const columns: GridColDef[] = [
 ];
 
 export const MySquads = () => {
-    const squadsQuery = useSquads({});
+    const squadsQuery = useSquads();
 
     if (squadsQuery.isLoading) {
         return <Spinner />;
     }
 
-    const data = squadsQuery.data || [];
     return (
         <Box
             sx={{
@@ -45,14 +44,18 @@ export const MySquads = () => {
                 height: 224,
             }}
         >
-            <DataGrid
-                rows={data}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                getRowId={(row) => row.squadId}
-                disableSelectionOnClick
-            />
+            {!squadsQuery.data ? (
+                <Typography textAlign="center">No results found</Typography>
+            ) : (
+                <DataGrid
+                    rows={squadsQuery.data}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    getRowId={(row) => row.squadId}
+                    disableSelectionOnClick
+                />
+            )}
         </Box>
     );
 };

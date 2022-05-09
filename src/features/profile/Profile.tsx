@@ -2,8 +2,28 @@ import * as React from "react";
 import { Box, Grid, Tabs, Tab } from "@mui/material";
 import { MyMatches } from "@/features/matches";
 import { MySquads } from "@/features/squads/components/MySquads";
+import { makeStyles } from "@material-ui/core/styles";
+import SubHeader from "@/components/Header/SubHeader";
+
+const useStyles = makeStyles((theme) => ({
+    profile: {
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.text.primary,
+        border: 1,
+        borderColor: "divider",
+        borderRadius: "16px",
+        height: 300,
+        padding: 5,
+        paddingLeft: 10,
+    },
+    tabsIndicator: {
+        backgroundColor: theme.palette.secondary.light,
+    },
+}));
 
 const Profile = () => {
+    const styles = useStyles();
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -11,22 +31,7 @@ const Profile = () => {
 
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={10} md={12}>
-                    <Box
-                        sx={{
-                            bgcolor: " #eeffe6",
-                            display: "flex",
-                            height: 60,
-                            p: 2,
-                            borderBottom: 1,
-                            borderColor: "divider",
-                        }}
-                    >
-                        <h1>My Profile</h1>
-                    </Box>
-                </Grid>
-            </Grid>
+            <SubHeader title={"My Profile"} />
             <Grid container spacing={2} sx={{ p: 3 }}>
                 <Grid item xs={10} md={12} justifyContent="center">
                     <h2>Matches</h2>
@@ -35,7 +40,9 @@ const Profile = () => {
                         <Tabs
                             onChange={handleChange}
                             value={value}
-                            aria-label="Tabs where each tab needs to be selected manually"
+                            classes={{
+                                indicator: styles.tabsIndicator,
+                            }}
                         >
                             <Tab label="Upcoming" />
                             <Tab label="Available" />
@@ -50,15 +57,7 @@ const Profile = () => {
                     <MySquads />
                 </Grid>
                 <Grid item xs={4} md={6} justifyContent="flex-end">
-                    <Box
-                        sx={{
-                            bgcolor: "   #eeffe6",
-                            border: 1,
-                            borderColor: "divider",
-                            height: 275,
-                            p: 1,
-                        }}
-                    >
+                    <Box className={styles.profile}>
                         <h2>Profile</h2>
                     </Box>
                 </Grid>

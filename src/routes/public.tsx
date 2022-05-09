@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AppLayout } from "@/components/Layout";
+import Venues from "@/features/venues/Venues";
+import Bookings from "@/features/bookings/Bookings";
 
 const App = () => {
     return (
@@ -16,9 +18,9 @@ export const publicRoutes = [
         children: [
             {
                 path: "/book",
-                element: <div />,
+                element: <Bookings />,
             },
-            { path: "/venues", element: <div /> },
+            { path: "/venues", element: <Venues /> },
             { path: "*", element: <Navigate to="/" /> },
         ],
     },

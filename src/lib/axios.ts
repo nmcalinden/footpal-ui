@@ -27,6 +27,6 @@ axios.interceptors.response.use(
         return response.data;
     },
     (error) => {
-        console.log("Error: ", error);
+        throw error;
     }
 );

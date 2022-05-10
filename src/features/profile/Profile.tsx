@@ -4,18 +4,9 @@ import { MyMatches } from "@/features/matches";
 import { MySquads } from "@/features/squads/components/MySquads";
 import { makeStyles } from "@material-ui/core/styles";
 import SubHeader from "@/components/Header/SubHeader";
+import MyProfile from "./MyUser";
 
 const useStyles = makeStyles((theme) => ({
-    profile: {
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.text.primary,
-        border: 1,
-        borderColor: "divider",
-        borderRadius: "16px",
-        height: 300,
-        padding: 5,
-        paddingLeft: 10,
-    },
     tabsIndicator: {
         backgroundColor: theme.palette.secondary.light,
     },
@@ -40,6 +31,7 @@ const Profile = () => {
                         <Tabs
                             onChange={handleChange}
                             value={value}
+                            aria-label="Tabs where each tab needs to be selected manually"
                             classes={{
                                 indicator: styles.tabsIndicator,
                             }}
@@ -56,10 +48,8 @@ const Profile = () => {
                     <h2>My Squad(s)</h2>
                     <MySquads />
                 </Grid>
-                <Grid item xs={4} md={6} justifyContent="flex-end">
-                    <Box className={styles.profile}>
-                        <h2>Profile</h2>
-                    </Box>
+                <Grid item xs={4} md={6}>
+                    <MyProfile />
                 </Grid>
             </Grid>
         </>

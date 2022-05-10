@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
@@ -37,11 +37,31 @@ const columns: GridColDef[] = [
         field: "view",
         headerName: "",
         width: 80,
+        renderCell: () => (
+            <Link
+                component="button"
+                onClick={() => {
+                    console.log("View Match");
+                }}
+            >
+                View
+            </Link>
+        ),
     },
     {
         field: "leave",
         headerName: "",
         width: 80,
+        renderCell: () => (
+            <Link
+                component="button"
+                onClick={() => {
+                    console.log("Leave Match");
+                }}
+            >
+                Leave
+            </Link>
+        ),
     },
 ];
 
@@ -54,8 +74,6 @@ const rows = [
         time: "18:00",
         noOfPlayers: "10/10",
         squad: "Dream Team",
-        view: "View",
-        leave: "Leave",
     },
     {
         id: 2,
@@ -65,8 +83,6 @@ const rows = [
         time: "20:00",
         noOfPlayers: "6/10",
         squad: "N/A",
-        view: "View",
-        leave: "Leave",
     },
 ];
 

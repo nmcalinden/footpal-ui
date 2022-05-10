@@ -38,10 +38,9 @@ export const MySquads = () => {
     return (
         <Box
             sx={{
-                flexGrow: 1,
                 bgcolor: "background.paper",
+                height: "250px",
                 display: "flex",
-                height: 224,
             }}
         >
             {!squadsQuery.data ? (

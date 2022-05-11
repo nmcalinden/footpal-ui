@@ -1,2 +1,2 @@
-export * from "./Profile";
-export * from "./MyUser";
+export * from "./components/Profile";
+export * from "./components/MyUser";

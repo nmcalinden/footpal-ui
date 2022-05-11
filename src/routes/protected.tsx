@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AppLayout } from "@/components/Layout";
-import Profile from "@/features/profile/Profile";
+import Profile from "@/features/profile/components/Profile";
 import Squads from "@/features/squads/components/Squads";
 import Matches from "@/features/matches/Matches";
 import Venues from "@/features/venues/Venues";

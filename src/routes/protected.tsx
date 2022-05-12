@@ -3,8 +3,8 @@ import { AppLayout } from "@/components/Layout";
 import Profile from "@/features/profile/components/Profile";
 import Squads from "@/features/squads/components/Squads";
 import Matches from "@/features/matches/Matches";
-import Venues from "@/features/venues/Venues";
-import Bookings from "@/features/bookings/Bookings";
+import Venues from "@/features/venues/components/Venues";
+import Bookings from "@/features/bookings/components/Bookings";
 
 const App = () => {
     return (

@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AppLayout } from "@/components/Layout";
-import Venues from "@/features/venues/Venues";
-import Bookings from "@/features/bookings/Bookings";
+import Venues from "@/features/venues/components/Venues";
+import Bookings from "@/features/bookings/components/Bookings";
 
 const App = () => {
     return (

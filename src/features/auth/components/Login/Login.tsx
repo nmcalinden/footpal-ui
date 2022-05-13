@@ -56,6 +56,7 @@ export default function Login({
                 <Button
                     variant="contained"
                     color="success"
+                    type="submit"
                     onClick={() => loginUser({ email, password })}
                 >
                     Login

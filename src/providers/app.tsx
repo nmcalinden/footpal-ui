@@ -8,7 +8,7 @@ import { queryClient } from "@/lib/react-query";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { appTheme } from "./theme";
 import { Button, Container } from "@mui/material";
-import { Spinner } from "@/components/Elements";
+import { LoadingBackdrop } from "@/components/Elements";
 
 type AppProviderProps = {
     children: React.ReactNode;
@@ -47,7 +47,7 @@ const ErrorFallback = () => {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     return (
-        <React.Suspense fallback={<Spinner />}>
+        <React.Suspense fallback={<LoadingBackdrop />}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <QueryClientProvider client={queryClient}>
                     {process.env.NODE_ENV !== "test" && <ReactQueryDevtools />}

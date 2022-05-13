@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Profile = () => {
+export const Profile = () => {
     const styles = useStyles();
 
     const [value, setValue] = React.useState(0);

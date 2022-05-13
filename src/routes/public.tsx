@@ -1,7 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AppLayout } from "@/components/Layout";
-import Venues from "@/features/venues/components/Venues";
-import Bookings from "@/features/bookings/components/Bookings";
+import { lazyImport } from "@/utils/lazyImport";
+
+const { Bookings } = lazyImport(
+    () => import("@/features/bookings"),
+    "Bookings"
+);
+const { Venues } = lazyImport(() => import("@/features/venues"), "Venues");
 
 const App = () => {
     return (

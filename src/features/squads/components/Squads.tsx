@@ -2,7 +2,7 @@ import SubHeader from "@/components/Header/SubHeader";
 import { Grid } from "@mui/material";
 import { MySquads } from "@/features/squads/components/MySquads";
 
-const Squads = () => {
+export const Squads = () => {
     return (
         <>
             <SubHeader title={"Squads"} />
@@ -31,5 +31,3 @@ const Squads = () => {
         </>
     );
 };
-
-export default Squads;

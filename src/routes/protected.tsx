@@ -1,10 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AppLayout } from "@/components/Layout";
-import Profile from "@/features/profile/components/Profile";
-import Squads from "@/features/squads/components/Squads";
-import Matches from "@/features/matches/Matches";
-import Venues from "@/features/venues/components/Venues";
-import Bookings from "@/features/bookings/components/Bookings";
+import { lazyImport } from "@/utils/lazyImport";
+
+const { Bookings } = lazyImport(
+    () => import("@/features/bookings"),
+    "Bookings"
+);
+const { Profile } = lazyImport(() => import("@/features/profile"), "Profile");
+const { Matches } = lazyImport(() => import("@/features/matches"), "Matches");
+const { Squads } = lazyImport(() => import("@/features/squads"), "Squads");
+const { Venues } = lazyImport(() => import("@/features/venues"), "Venues");
 
 const App = () => {
     return (

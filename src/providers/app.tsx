@@ -8,6 +8,7 @@ import { queryClient } from "@/lib/react-query";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { appTheme } from "./theme";
 import { Button, Container } from "@mui/material";
+import { Spinner } from "@/components/Elements";
 
 type AppProviderProps = {
     children: React.ReactNode;
@@ -24,6 +25,7 @@ export const ErrorFallBackStyle = {
     boxShadow: 24,
     p: 4,
     display: "flex",
+    flexDirection: "column",
 };
 
 const ErrorFallback = () => {
@@ -45,15 +47,17 @@ const ErrorFallback = () => {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     return (
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <QueryClientProvider client={queryClient}>
-                {process.env.NODE_ENV !== "test" && <ReactQueryDevtools />}
-                <AuthProvider>
-                    <ThemeProvider theme={appTheme}>
-                        <Router>{children}</Router>
-                    </ThemeProvider>
-                </AuthProvider>
-            </QueryClientProvider>
-        </ErrorBoundary>
+        <React.Suspense fallback={<Spinner />}>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <QueryClientProvider client={queryClient}>
+                    {process.env.NODE_ENV !== "test" && <ReactQueryDevtools />}
+                    <AuthProvider>
+                        <ThemeProvider theme={appTheme}>
+                            <Router>{children}</Router>
+                        </ThemeProvider>
+                    </AuthProvider>
+                </QueryClientProvider>
+            </ErrorBoundary>
+        </React.Suspense>
     );
 };

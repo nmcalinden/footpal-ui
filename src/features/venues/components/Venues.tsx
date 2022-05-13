@@ -5,7 +5,7 @@ import { useVenues } from "@/features/venues/api/getVenues";
 import { Autocomplete, Grid, TablePagination, TextField } from "@mui/material";
 import VenueList from "./VenueList";
 
-const Venues = () => {
+export const Venues = () => {
     const venues = useVenues();
 
     const [page, setPage] = React.useState(0);

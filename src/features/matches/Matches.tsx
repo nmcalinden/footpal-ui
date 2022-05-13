@@ -2,7 +2,7 @@ import SubHeader from "@/components/Header/SubHeader";
 import { Grid } from "@mui/material";
 import { MyMatches } from "./MyMatches";
 
-const Matches = () => {
+export const Matches = () => {
     return (
         <>
             <SubHeader title={"Matches"} />

@@ -41,14 +41,14 @@ export const Search = () => {
                     minWidth: 180,
                 }}
             >
-                <InputLabel id="demo-simple-select-helper-label">
+                <InputLabel id="city-label-header" aria-label="city">
                     City
                 </InputLabel>
                 <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
+                    labelId="select-city-label"
+                    id="select-city-label"
                     value={city}
-                    label="City"
+                    label="City-Select"
                     onChange={handleCityChange}
                 >
                     <MenuItem value={1}>Belfast</MenuItem>
@@ -62,14 +62,14 @@ export const Search = () => {
                     minWidth: 180,
                 }}
             >
-                <InputLabel id="demo-simple-select-helper-label">
+                <InputLabel id="venue-label-header" aria-label="venue">
                     Venue
                 </InputLabel>
                 <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
+                    labelId="select-venue-label"
+                    id="select-venue-label"
                     value={venue}
-                    label="Age"
+                    label="Venue"
                     onChange={handleVenueChange}
                 >
                     <MenuItem value={1}>Venue A</MenuItem>
@@ -83,7 +83,10 @@ export const Search = () => {
                     minWidth: 180,
                 }}
             >
-                <InputLabel id="demo-simple-select-helper-label">
+                <InputLabel
+                    id="max-players-label-header"
+                    aria-label="max players"
+                >
                     Max Players
                 </InputLabel>
                 <Select

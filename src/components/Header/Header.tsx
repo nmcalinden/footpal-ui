@@ -49,7 +49,7 @@ export const Header = () => {
 
     const getSignIn = () => {
         return (
-            <Tooltip title="Sign In or Sign Up">
+            <Tooltip data-testid="sign-in-tooltip" title="Sign In or Sign Up">
                 <Button
                     key={"sign-in"}
                     onClick={handleOpenSignIn}
@@ -124,6 +124,8 @@ export const Header = () => {
                         noWrap
                         component="div"
                         sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                        aria-label="footpal-title"
+                        data-testid="footpal-title"
                     >
                         Footpal
                     </Typography>

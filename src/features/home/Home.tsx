@@ -1,10 +1,9 @@
-import * as React from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@material-ui/core/styles";
 import { Search } from "@/components/Search";
 
-const Home = () => {
+export const Home = () => {
     const theme = useTheme();
 
     return (
@@ -19,7 +18,7 @@ const Home = () => {
                         justifyContent: "center",
                     }}
                 >
-                    <h1>Footpal</h1>
+                    <h1 data-testid={"home-title"}>Footpal</h1>
                 </Box>
                 <Box
                     sx={{

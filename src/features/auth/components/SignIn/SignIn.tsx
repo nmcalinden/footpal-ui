@@ -36,8 +36,9 @@ export default function SignIn({ open, setOpen }: SignInProps) {
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
+            aria-labelledby="sign-in-modal"
             aria-describedby="modal-modal-description"
+            data-testid="sign-in-modal"
         >
             <Stack component="form" sx={SignInModal}>
                 {isLoginActive ? (

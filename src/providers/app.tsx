@@ -32,6 +32,7 @@ const ErrorFallback = () => {
             <h2 className="text-lg font-semibold">
                 Oops, something went wrong!
             </h2>
+            <br />
             <Button
                 className="mt-4"
                 onClick={() => window.location.assign(window.location.origin)}

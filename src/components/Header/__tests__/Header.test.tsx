@@ -22,9 +22,11 @@ describe("<Header />", () => {
         });
 
         await waitFor(() => {
-            screen.getByRole("button", {
-                name: /sign in/i,
-            });
+            expect(
+                screen.getByRole("button", {
+                    name: /sign in/i,
+                })
+            ).toBeInTheDocument();
         });
 
         await waitFor(() => {

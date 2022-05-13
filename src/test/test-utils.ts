@@ -9,9 +9,14 @@ import storage from "@/utils/storage";
 import { FunctionComponent } from "react";
 import { JWT_SECRET } from "@/config";
 import jwt from "jsonwebtoken";
+import { userGenerator } from "./data-generators";
+
+export const createUser = async (userProperties?: any) => {
+    const user = userGenerator(userProperties);
+    return user;
+};
 
 export const loginAsUser = async (user: any) => {
-    console.log("User...", user);
     const encodedToken = jwt.sign(user, JWT_SECRET);
 
     storage.setToken(encodedToken);
@@ -41,7 +46,7 @@ export const render = async (
     ui: any,
     { route = "/", user, ...renderOptions }: Record<string, any> = {}
 ) => {
-    // if you want to render the app unauthenticated then pass "null" as the user
+    // Pass null for unauthenticated
     user = await initializeUser(null);
 
     window.history.pushState({}, "Test page", route);

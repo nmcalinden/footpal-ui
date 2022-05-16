@@ -6,6 +6,7 @@ const { Bookings } = lazyImport(
     () => import("@/features/bookings"),
     "Bookings"
 );
+const { Home } = lazyImport(() => import("@/features/home"), "Home");
 const { Venues } = lazyImport(() => import("@/features/venues"), "Venues");
 
 const App = () => {
@@ -21,6 +22,7 @@ export const publicRoutes = [
         path: "/",
         element: <App />,
         children: [
+            { path: "/", element: <Home /> },
             {
                 path: "/book",
                 element: <Bookings />,

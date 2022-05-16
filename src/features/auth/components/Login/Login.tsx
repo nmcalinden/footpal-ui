@@ -1,49 +1,78 @@
 import * as React from "react";
-import { Stack, Button, Link, TextField } from "@mui/material";
+import { Stack, Button, Link, TextField, Alert } from "@mui/material";
 import { LoginCredentialsDTO } from "../../api/login";
+import { Controller, useForm } from "react-hook-form";
+import { useAuth } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
 interface LoginProps {
-    loginUser: (data: LoginCredentialsDTO) => void;
     openRegister: () => void;
     closeModal: () => void;
 }
 
-export default function Login({
-    loginUser,
-    openRegister,
-    closeModal,
-}: LoginProps) {
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+export default function Login({ openRegister, closeModal }: LoginProps) {
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const { handleSubmit, control } = useForm();
+    const [loginError, setLoginError] = React.useState("");
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
+    const handleLogin = (data: any) => {
+        loginUser(data);
     };
 
-    const handlePasswordChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setPassword(event.target.value);
+    const loginUser = async (data: LoginCredentialsDTO) => {
+        await login(data)
+            .then(() => navigate("/profile"))
+            .catch(function (error) {
+                setLoginError(error.response.data);
+            });
     };
 
     return (
         <>
-            <TextField
-                id="standard-email"
-                label="E-mail"
-                value={email}
-                onChange={handleEmailChange}
-                variant="standard"
+            <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                rules={{ required: "E-mail required" }}
+                render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                }) => (
+                    <TextField
+                        id="standard-email"
+                        label="E-mail"
+                        value={value}
+                        onChange={onChange}
+                        variant="standard"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                    />
+                )}
             />
-            <TextField
-                id="outlined-name"
-                label="Password"
-                type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                variant="standard"
-                margin="dense"
+            <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Password required" }}
+                render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                }) => (
+                    <TextField
+                        id="outlined-name"
+                        label="Password"
+                        type="password"
+                        value={value}
+                        onChange={onChange}
+                        variant="standard"
+                        margin="dense"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                    />
+                )}
             />
+            {loginError && <Alert severity="error">{loginError}</Alert>}
             <Stack
                 direction="row"
                 spacing={4}
@@ -57,7 +86,7 @@ export default function Login({
                     variant="contained"
                     color="success"
                     type="submit"
-                    onClick={() => loginUser({ email, password })}
+                    onClick={handleSubmit(handleLogin)}
                 >
                     Login
                 </Button>

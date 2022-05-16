@@ -8,18 +8,11 @@ import {
 import Login from "../Login";
 
 describe("<Login />", () => {
-    const loginUser = jest.fn();
     const openRegister = jest.fn();
     const closeModal = jest.fn();
 
     it("initial render login", async () => {
-        render(
-            <Login
-                loginUser={loginUser}
-                openRegister={openRegister}
-                closeModal={closeModal}
-            />
-        );
+        render(<Login openRegister={openRegister} closeModal={closeModal} />);
 
         await waitFor(() => {
             expect(screen.getByLabelText("E-mail")).toBeInTheDocument();
@@ -30,13 +23,7 @@ describe("<Login />", () => {
     it("login new user", async () => {
         const newUser = await createUser();
 
-        render(
-            <Login
-                loginUser={loginUser}
-                openRegister={openRegister}
-                closeModal={closeModal}
-            />
-        );
+        render(<Login openRegister={openRegister} closeModal={closeModal} />);
 
         const emailInput = await waitFor(() =>
             screen.findByLabelText("E-mail")
@@ -51,18 +38,10 @@ describe("<Login />", () => {
         userEvent.type(passwordInput, newUser.password);
 
         userEvent.click(screen.getByRole("button", { name: /login/i }));
-
-        await waitFor(() => expect(loginUser).toHaveBeenCalledTimes(1));
     });
 
     it("cancel login", async () => {
-        render(
-            <Login
-                loginUser={loginUser}
-                openRegister={openRegister}
-                closeModal={closeModal}
-            />
-        );
+        render(<Login openRegister={openRegister} closeModal={closeModal} />);
 
         const emailInput = await waitFor(() =>
             screen.findByLabelText("E-mail")
@@ -78,13 +57,7 @@ describe("<Login />", () => {
     });
 
     it("open register", async () => {
-        render(
-            <Login
-                loginUser={loginUser}
-                openRegister={openRegister}
-                closeModal={closeModal}
-            />
-        );
+        render(<Login openRegister={openRegister} closeModal={closeModal} />);
 
         const emailInput = await waitFor(() =>
             screen.findByLabelText("E-mail")

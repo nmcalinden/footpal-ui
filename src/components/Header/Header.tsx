@@ -100,7 +100,13 @@ export const Header = () => {
                     <MenuItem key={"profile"} onClick={handleOpenProfile}>
                         <Typography textAlign="center">My Profile</Typography>
                     </MenuItem>
-                    <MenuItem key={"logout"} onClick={handleLogout}>
+                    <MenuItem
+                        key={"logout"}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
+                        }}
+                    >
                         <Typography textAlign="center">Logout</Typography>
                     </MenuItem>
                 </Menu>

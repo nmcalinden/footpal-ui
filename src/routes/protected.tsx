@@ -6,6 +6,7 @@ const { Bookings } = lazyImport(
     () => import("@/features/bookings"),
     "Bookings"
 );
+const { Home } = lazyImport(() => import("@/features/home"), "Home");
 const { Profile } = lazyImport(() => import("@/features/profile"), "Profile");
 const { Matches } = lazyImport(() => import("@/features/matches"), "Matches");
 const { Squads } = lazyImport(() => import("@/features/squads"), "Squads");
@@ -24,6 +25,7 @@ export const protectedRoutes = [
         path: "/",
         element: <App />,
         children: [
+            { path: "/", element: <Home /> },
             { path: "/profile", element: <Profile /> },
             { path: "/book", element: <Bookings /> },
             { path: "/venues", element: <Venues /> },

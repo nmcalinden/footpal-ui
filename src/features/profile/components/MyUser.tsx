@@ -47,7 +47,6 @@ export default function MyUser() {
     };
 
     const onSubmit = async (data: any) => {
-        console.log("Data: ", data);
         const testId: number = 3;
         await updatePlayerMutation.mutateAsync({
             data: {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Grid, Tabs, Tab } from "@mui/material";
-import { MyMatches } from "@/features/matches";
+import { MyMatches } from "@/features/matches/components";
 import { MySquads } from "@/features/squads/components/MySquads";
 import { makeStyles } from "@material-ui/core/styles";
 import SubHeader from "@/components/Header/SubHeader";

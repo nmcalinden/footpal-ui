@@ -1,2 +1,1 @@
-export * from "./MyMatches";
-export * from "./Matches";
+export * from "./components";

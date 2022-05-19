@@ -27,8 +27,8 @@ function tabProps(index: number) {
     };
 }
 
-const homeNavBar = ["/", "/book", "/venues"];
-const authNavBar = ["/", "/profile", "/book", "/venues", "/matches", "/squads"];
+const homeNavBar = ["", "book", "venues"];
+const authNavBar = ["", "profile", "book", "venues", "matches", "squads"];
 
 export const NavBar = () => {
     const { user } = useAuth();
@@ -37,11 +37,12 @@ export const NavBar = () => {
 
     const getTabValue = (path: string) => {
         const tabs = user ? authNavBar : homeNavBar;
-        return tabs.indexOf(path);
+        const root = path.split("/")[1];
+        const isMatch = (element: string) => element === root;
+        return tabs.findIndex(isMatch);
     };
 
     const value = getTabValue(location.pathname);
-
     const HomeNavBar = () => {
         return (
             <>

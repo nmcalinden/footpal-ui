@@ -1,12 +1,19 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@material-ui/core/styles";
 import { Venue } from "../types";
+import { useNavigate } from "react-router-dom";
 
 type VenueBoxProps = {
+    page: string;
     data: Venue;
 };
-const VenueBox = ({ data }: VenueBoxProps) => {
+const VenueBox = ({ page, data }: VenueBoxProps) => {
     const theme = useTheme();
+    const navigate = useNavigate();
+
+    const openVenue = () => {
+        navigate(`/${page}/${data.id}`);
+    };
 
     return (
         <Box
@@ -31,6 +38,7 @@ const VenueBox = ({ data }: VenueBoxProps) => {
                         backgroundColor: theme.palette.primary.light,
                     },
                 }}
+                onClick={openVenue}
             >
                 View
             </Button>

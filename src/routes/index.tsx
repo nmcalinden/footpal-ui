@@ -7,9 +7,11 @@ import { publicRoutes } from "./public";
 export const AppRoutes = () => {
     const { user } = useAuth();
 
-    const routes = user ? protectedRoutes : publicRoutes;
+    const routes = user
+        ? [...publicRoutes, ...protectedRoutes]
+        : [...publicRoutes];
 
-    const element = useRoutes([...routes]);
+    const element = useRoutes(routes);
 
     return <>{element}</>;
 };

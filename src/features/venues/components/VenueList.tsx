@@ -3,10 +3,11 @@ import { Venue } from "@/features/venues/types";
 import VenueBox from "./VenueBox";
 
 interface VenueListProps {
+    page: string;
     data: Venue[] | undefined;
 }
 
-const VenueList = ({ data }: VenueListProps) => {
+const VenueList = ({ page, data }: VenueListProps) => {
     const getVenueView = (data: Venue, index: number) => {
         return (
             <Grid
@@ -20,7 +21,7 @@ const VenueList = ({ data }: VenueListProps) => {
                     paddingBottom: 5,
                 }}
             >
-                <VenueBox data={data} />
+                <VenueBox page={page} data={data} />
             </Grid>
         );
     };

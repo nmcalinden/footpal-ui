@@ -1,19 +1,22 @@
-import { Box, Link } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useMatches } from "@/features/matches/api/getUserMatches";
+import { Spinner } from "@/components/Elements";
 
 const columns: GridColDef[] = [
-    { field: "venue", headerName: "Venue", flex: 1, width: 90 },
+    { field: "venueName", headerName: "Venue", flex: 1, width: 90 },
     {
-        field: "pitch",
+        field: "pitchName",
         headerName: "Pitch",
         flex: 1,
         width: 150,
     },
     {
-        field: "date",
+        field: "matchDate",
         headerName: "Date",
         flex: 1,
         width: 150,
+        renderCell: (params) => renderMatchDate(params),
     },
     {
         field: "time",
@@ -22,13 +25,13 @@ const columns: GridColDef[] = [
         width: 110,
     },
     {
-        field: "noOfPlayers",
+        field: "maxPlayers",
         headerName: "No of Players",
         flex: 1,
         width: 110,
     },
     {
-        field: "squad",
+        field: "squadName",
         headerName: "Squad",
         flex: 1,
         width: 110,
@@ -65,28 +68,13 @@ const columns: GridColDef[] = [
     },
 ];
 
-const rows = [
-    {
-        id: 1,
-        venue: "Venue A",
-        pitch: "Pitch 1",
-        date: "20/03/2022",
-        time: "18:00",
-        noOfPlayers: "10/10",
-        squad: "Dream Team",
-    },
-    {
-        id: 2,
-        venue: "Venue B",
-        pitch: "Pitch 3",
-        date: "27/03/2022",
-        time: "20:00",
-        noOfPlayers: "6/10",
-        squad: "N/A",
-    },
-];
-
 export const MyMatches = () => {
+    const matchesQuery = useMatches();
+
+    if (matchesQuery.isLoading) {
+        return <Spinner />;
+    }
+
     return (
         <Box
             sx={{
@@ -97,12 +85,23 @@ export const MyMatches = () => {
                 marginTop: 2,
             }}
         >
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-            />
+            {!matchesQuery.data ? (
+                <Typography textAlign="center">No results found</Typography>
+            ) : (
+                <DataGrid
+                    rows={matchesQuery.data}
+                    columns={columns}
+                    pageSize={2}
+                    rowsPerPageOptions={[2]}
+                />
+            )}
         </Box>
     );
 };
+
+function renderMatchDate(params: any) {
+    if (params.value) {
+        return params.value.split("T")[0];
+    }
+    return null;
+}

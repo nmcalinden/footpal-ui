@@ -32,7 +32,7 @@ const FindABooking = () => {
                 >
                     Search
                 </Button>
-                <VenueList data={venues.data} />
+                <VenueList page={"book"} data={venues.data} />
             </Grid>
         </>
     );

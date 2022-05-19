@@ -68,7 +68,7 @@ export const Venues = () => {
                     />
                 </Grid>
             </Grid>
-            <VenueList data={venues.data} />
+            <VenueList page={"venues"} data={venues.data} />
         </>
     );
 };

@@ -14,3 +14,9 @@ export type VenuePitch = {
     name: string;
     href: string;
 };
+
+export type VenueOpeningHour = {
+    dayOfWeek: string;
+    open: string;
+    close: string;
+};

@@ -19,9 +19,7 @@ Run Tests:
 ### Dependencies
 
 | | Description |
-
 | --- | --- |
-
 | [axios](https://github.com/axios/axios) | Promise based HTTP client for the browser and node.js |
 | [craco](https://github.com/gsoft-inc/craco) | Create React App Configuration Override is an easy and comprehensible configuration layer for create-react-app. |
 | [emotion](https://github.com/emotion-js/emotion) | Emotion is a performant and flexible CSS-in-JS library. Building on many other CSS-in-JS libraries, it allows you to style apps quickly with string or object styles. It has predictable composition to avoid specificity issues with CSS. |

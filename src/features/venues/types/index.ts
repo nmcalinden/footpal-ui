@@ -20,3 +20,11 @@ export type VenueOpeningHour = {
     open: string;
     close: string;
 };
+
+export type Pitch = {
+    id: number;
+    venueId: number;
+    name: string;
+    maxPlayers: number;
+    cost: number;
+};

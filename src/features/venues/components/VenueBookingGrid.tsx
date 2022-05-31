@@ -169,7 +169,7 @@ export const VenueBookingGrid = ({
 
     const handleBookPitchNav = (pitchSlotIds: number[], matchDate: string) => {
         navigate(
-            `/book/${venueId}/pitch?pitches=${pitchSlotIds.toString()}&matchDate=${matchDate}`
+            `/book/${venueId}/pitch?slots=${pitchSlotIds.toString()}&matchDate=${matchDate}`
         );
     };
 

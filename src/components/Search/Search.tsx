@@ -1,4 +1,5 @@
 import {
+    Button,
     FormControl,
     InputLabel,
     MenuItem,
@@ -6,12 +7,16 @@ import {
     SelectChangeEvent,
     TextField,
 } from "@mui/material";
+import { useTheme } from "@material-ui/core/styles";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React from "react";
 import { SearchBarWrapper } from "./styled";
+import SearchIcon from "@mui/icons-material/Search";
 
 export const Search = () => {
+    const theme = useTheme();
+
     const [city, setCity] = React.useState("");
     const [venue, setVenue] = React.useState("");
     const [maxPlayers, setMaxPlayers] = React.useState("");
@@ -33,8 +38,22 @@ export const Search = () => {
     const handleDateChange = (newValue: Date | null) => {
         setValue(newValue);
     };
+
+    const maxDate = new Date();
+    maxDate.setMonth(new Date().getMonth() + 1);
     return (
         <SearchBarWrapper id="searchbar">
+            <FormControl>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                        maxDate={maxDate}
+                        value={value}
+                        onChange={handleDateChange}
+                        inputFormat="dd/MM/yyyy"
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+            </FormControl>
             <FormControl
                 sx={{
                     m: 1,
@@ -52,8 +71,6 @@ export const Search = () => {
                     onChange={handleCityChange}
                 >
                     <MenuItem value={1}>Belfast</MenuItem>
-                    <MenuItem value={2}>Lurgan</MenuItem>
-                    <MenuItem value={3}>Newry</MenuItem>
                 </Select>
             </FormControl>
             <FormControl
@@ -66,6 +83,7 @@ export const Search = () => {
                     Venue
                 </InputLabel>
                 <Select
+                    disabled
                     labelId="select-venue-label"
                     id="select-venue-label"
                     value={venue}
@@ -90,6 +108,7 @@ export const Search = () => {
                     Max Players
                 </InputLabel>
                 <Select
+                    disabled
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={maxPlayers}
@@ -101,14 +120,19 @@ export const Search = () => {
                     <MenuItem value={3}>12</MenuItem>
                 </Select>
             </FormControl>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopDatePicker
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleDateChange}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider>
+            <Button
+                variant="contained"
+                sx={{
+                    bgcolor: `${theme.palette.primary.main}`,
+                    "&:hover": {
+                        backgroundColor: theme.palette.primary.light,
+                    },
+                    height: "50px",
+                }}
+                endIcon={<SearchIcon />}
+            >
+                Search
+            </Button>
         </SearchBarWrapper>
     );
 };

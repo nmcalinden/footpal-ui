@@ -1,11 +1,8 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useTheme } from "@material-ui/core/styles";
+import { Box, Grid, Typography } from "@mui/material";
 import { Search } from "@/components/Search";
 
 export const Home = () => {
-    const theme = useTheme();
-
+    
     return (
         <Grid container spacing={2}>
             <Grid item xs={10} md={12}>
@@ -40,19 +37,6 @@ export const Home = () => {
                         Find a Pitch
                     </Typography>
                     <Search />
-                    <Button
-                        variant="contained"
-                        sx={{
-                            marginTop: 1,
-                            bgcolor: `${theme.palette.primary.main}`,
-                            "&:hover": {
-                                backgroundColor: theme.palette.primary.light,
-                            },
-                        }}
-                        endIcon={<SearchIcon />}
-                    >
-                        Search
-                    </Button>
                 </Box>
             </Grid>
         </Grid>

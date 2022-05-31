@@ -6,6 +6,10 @@ const { Bookings } = lazyImport(
     () => import("@/features/bookings"),
     "Bookings"
 );
+const { BookPitch } = lazyImport(
+    () => import("@/features/bookings"),
+    "BookPitch"
+);
 const { Home } = lazyImport(() => import("@/features/home"), "Home");
 const { Venues } = lazyImport(() => import("@/features/venues"), "Venues");
 const { VenueView } = lazyImport(
@@ -32,8 +36,10 @@ export const publicRoutes = [
                 element: <Bookings />,
             },
             { path: "/book/:id", element: <VenueView page={"book"} /> },
+            { path: "/book/:id/pitch", element: <BookPitch page={"book"} /> },
             { path: "/venues", element: <Venues /> },
             { path: "/venues/:id", element: <VenueView page={"venues"} /> },
+            { path: "/venues/:id/pitch", element: <BookPitch page={"venues"} /> },
             { path: "*", element: <Navigate to="/" /> },
         ],
     },

@@ -8,7 +8,7 @@ export const getVenueBookingSlots = ({
     dateFrom,
     dateTo,
 }: {
-    venueId: string;
+    venueId: number;
     dateFrom: string;
     dateTo: string;
 }): Promise<VenueBookingSlots[]> => {
@@ -20,7 +20,7 @@ export const getVenueBookingSlots = ({
 type QueryFnType = typeof getVenueBookingSlots;
 
 type UseVenueBookingSlotsOptions = {
-    venueId: string;
+    venueId: number;
     dateFrom: string;
     dateTo: string;
     config?: QueryConfig<QueryFnType>;

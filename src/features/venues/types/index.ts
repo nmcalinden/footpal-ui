@@ -28,3 +28,15 @@ export type Pitch = {
     maxPlayers: number;
     cost: number;
 };
+
+export type Timeslot = {
+    id: number;
+    dayOfWeek: string;
+    startTime: string;
+    endTime: string;
+};
+
+export type PitchTimeslot = {
+    pitch: Pitch;
+    timeSlot: Timeslot;
+};

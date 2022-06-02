@@ -1,6 +1,6 @@
 import { useQueries } from "react-query";
 import { axios } from "@/lib/axios";
-import { Pitch } from "../types";
+import { PitchTimeslot } from "../types";
 
 export const getPitchByTimeSlot = ({
     venueId,
@@ -8,7 +8,7 @@ export const getPitchByTimeSlot = ({
 }: {
     venueId: string;
     pitchTimeslotId: string;
-}): Promise<Pitch> => {
+}): Promise<PitchTimeslot> => {
     return axios.get(`/venues/${venueId}/timeslots/${pitchTimeslotId}/pitch`);
 };
 

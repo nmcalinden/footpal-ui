@@ -72,7 +72,7 @@ const getTimeSlots = (vBookingSlots: VenueBookingSlots[]) => {
 
                     if (_.isUndefined(timeSlot)) {
                         slot.days.push(dayTest);
-                    } else {
+                    } else if (!ts.isBooked) {
                         timeSlot.pitchTimeSlotId.push(ts.id);
                     }
                 }

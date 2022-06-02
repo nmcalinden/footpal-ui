@@ -10,3 +10,7 @@ export type VenueTimeSlots = {
     endTime: string;
     isBooked: boolean;
 };
+
+export type BookingId = {
+    id: number;
+};

@@ -1,10 +1,10 @@
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Box,
-    Breadcrumbs,
-    FormControl,
     FormControlLabel,
     Grid,
-    Link,
     MenuItem,
     Radio,
     RadioGroup,
@@ -12,14 +12,18 @@ import {
     SelectChangeEvent,
     Typography,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SubHeader from "@/components/Header/SubHeader";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useVenue } from "@/features/venues/api/getVenue";
+import { useSquads } from "@/features/squads/api/getSquads";
 import { Spinner } from "@/components/Elements";
 import VenueBookingGrid from "@/features/venues/components/VenueBookingGrid";
 import React from "react";
 import { usePitchesByTimeslots } from "@/features/venues/api/getPitchByTimeslot";
 import _ from "lodash";
+import BookingOrder from "./BookingOrder";
+import BookingBreadcrumb from "./BookingBreadcrumb";
 
 interface BookPitchProps {
     page: string;
@@ -28,7 +32,6 @@ interface BookPitchProps {
 export const BookPitch = ({ page }: BookPitchProps) => {
     let { id } = useParams();
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
 
     const matchDateParam = searchParams.get("matchDate");
     const slots = searchParams.get("slots");
@@ -36,8 +39,15 @@ export const BookPitch = ({ page }: BookPitchProps) => {
     const venueId: string = id || "";
 
     const [matchDate, setMatchDate] = React.useState<Date>(new Date());
-    const [noOfWeeks, setNoOfWeeks] = React.useState("1");
     const [selectedSquad, setSelectedSquad] = React.useState("");
+    const [selectedPitch, setSelectedPitch] = React.useState(0);
+    const [selectedBooking, setSelectedBooking] = React.useState("single");
+    const [selectedNoOfWeeks, setSelectedNoOfWeeks] = React.useState("1");
+    const [selectedMatchType, setSelectedMatchType] = React.useState("public");
+
+    const venueQuery = useVenue({ venueId });
+    const squadsQuery = useSquads();
+    const pitchesQuery = usePitchesByTimeslots({ venueId, pitchTimeslotIds });
 
     React.useEffect(() => {
         if (matchDateParam) {
@@ -50,120 +60,152 @@ export const BookPitch = ({ page }: BookPitchProps) => {
         }
     }, [matchDateParam]);
 
-    const venueQuery = useVenue({ venueId });
-    const pitchesQuery = usePitchesByTimeslots({ venueId, pitchTimeslotIds });
+    React.useEffect(() => {
+        if (pitchesQuery && pitchesQuery[0].data && selectedPitch === 0) {
+            setSelectedPitch(pitchesQuery[0].data.pitch.id);
+        }
+    }, [pitchesQuery, selectedPitch]);
 
     const capitalize = (s: string) => {
         if (typeof s !== "string") return "";
         return s.charAt(0).toUpperCase() + s.slice(1);
     };
 
-    const getPitchRadioDefault = () => {
-        if (pitchesQuery && pitchesQuery[0].data) {
-            return pitchesQuery[0].data.id;
-        }
-        return null;
+    const handlePitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const typeValue = (event.target as HTMLInputElement).value;
+        setSelectedPitch(parseInt(typeValue));
     };
 
     const handleNoOfWeeksChange = (event: SelectChangeEvent) => {
-        setNoOfWeeks(event.target.value);
+        setSelectedNoOfWeeks(event.target.value);
     };
 
     const handleSelectedSquadChange = (event: SelectChangeEvent) => {
         setSelectedSquad(event.target.value);
     };
 
-    const bookingBreadcrumbs = (
-        page: string,
-        venue: string,
-        venueId: number,
-        name: string
+    const handleBookingTypeChange = (
+        event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        return [
-            <Link
-                underline="hover"
-                key="1"
-                color="inherit"
-                onClick={() => navigate(`/${page}`)}
+        const typeValue = (event.target as HTMLInputElement).value;
+        if (typeValue === "single") {
+            setSelectedNoOfWeeks("1");
+        }
+        setSelectedBooking(typeValue);
+    };
+
+    const handleMatchTypeChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const typeValue = (event.target as HTMLInputElement).value;
+        if (typeValue === "public") {
+            setSelectedSquad("");
+        }
+        setSelectedMatchType(typeValue);
+    };
+
+    const getSelectedPitch = () => {
+        const pitch =
+            pitchesQuery &&
+            pitchesQuery.find((p) => p.data?.pitch.id === selectedPitch);
+
+        return pitch?.data;
+    };
+
+    const getSelectedSquad = () => {
+        const sq =
+            squadsQuery.data &&
+            squadsQuery.data.find((s) => s.squadId === parseInt(selectedSquad));
+
+        return sq;
+    };
+
+    const renderFormTitle = (title: string) => {
+        return (
+            <Grid item xs={2} md={4}>
+                <Typography>{`${title}: `}</Typography>
+            </Grid>
+        );
+    };
+
+    const renderSectionTitle = (title: string) => {
+        return (
+            <Typography
+                variant="h5"
+                gutterBottom
+                component="div"
+                sx={{ paddingTop: 2 }}
             >
-                {capitalize(page)}
-            </Link>,
-            <Link
-                underline="hover"
-                key="1"
-                color="inherit"
-                onClick={() => navigate(`/${page}/${venueId}`)}
-            >
-                {venue}
-            </Link>,
-            <Typography key="3" color="text.primary">
-                {name}
-            </Typography>,
-        ];
+                {title}
+            </Typography>
+        );
     };
 
     if (venueQuery.isLoading) {
         return <Spinner />;
     }
 
-    if (!venueQuery.data || !matchDateParam) return null;
+    if (!venueQuery.data || pitchesQuery.length === 0 || !matchDateParam)
+        return null;
+
     return (
         <>
             <SubHeader title={"Book Pitch"} />
-            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ p: 2 }}>
-                {bookingBreadcrumbs(
-                    page,
-                    venueQuery.data.name,
-                    venueQuery.data.id,
-                    "Order"
-                )}
-            </Breadcrumbs>
+            <BookingBreadcrumb page={page} venue={venueQuery.data} />
             <Grid container spacing={2} sx={{ p: 2 }}>
-                <Grid item xs={4} md={6} justifyContent="center">
+                <Grid
+                    item
+                    xs={4}
+                    md={6}
+                    justifyContent="center"
+                    sx={{ borderRight: 1, borderColor: "divider", p: 2 }}
+                >
                     <Grid container sx={{ paddingBottom: 2 }}>
-                        <Grid item xs={2} md={8}>
-                            <FormControl>
-                                <h2> Select Pitch</h2>
-                                <RadioGroup
-                                    aria-labelledby="pitch-radio-buttons-group"
-                                    defaultValue={getPitchRadioDefault()}
-                                    name="radio-buttons-group"
-                                >
-                                    {pitchesQuery &&
-                                        pitchesQuery.map((p) => {
+                        <Grid item xs={6} md={12}>
+                            <Grid item xs={6} md={12}>
+                                {renderSectionTitle("Select Pitch")}
+                                {pitchesQuery && (
+                                    <RadioGroup
+                                        aria-labelledby="pitch-radio-buttons-group"
+                                        value={selectedPitch}
+                                        name="radio-buttons-group"
+                                        onChange={handlePitchChange}
+                                    >
+                                        {pitchesQuery.map((p) => {
                                             if (_.isUndefined(p.data)) {
                                                 return null;
                                             }
 
-                                            const label = `${p.data.name} (Max ${p.data.maxPlayers} players) - £${p.data.cost}`;
+                                            const label = `${p.data.pitch.name} (Max ${p.data.pitch.maxPlayers} players) - £${p.data.pitch.cost}`;
                                             return (
                                                 <FormControlLabel
-                                                    value={p.data.id}
+                                                    key={p.data.pitch.id}
+                                                    value={p.data.pitch.id}
                                                     control={<Radio />}
                                                     label={label}
                                                 />
                                             );
                                         })}
-                                </RadioGroup>
-                            </FormControl>
-                            <FormControl sx={{ marginTop: 5 }}>
-                                <h2>Complete Booking</h2>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        paddingBottom: 2,
-                                    }}
-                                >
-                                    <Typography sx={{ paddingRight: 5 }}>
-                                        {"Booking Type: "}
-                                    </Typography>
+                                    </RadioGroup>
+                                )}
+                            </Grid>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingBottom: 2,
+                                    marginTop: 2,
+                                }}
+                            >
+                                {renderFormTitle("Booking")}
+                                <Grid item xs={4} md={8}>
                                     <RadioGroup
                                         row
                                         aria-labelledby="pitch-radio-buttons-group"
-                                        defaultValue="single"
+                                        value={selectedBooking}
                                         name="radio-buttons-group"
+                                        onChange={handleBookingTypeChange}
                                     >
                                         <FormControlLabel
                                             value={"single"}
@@ -176,43 +218,42 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                             label={"Recurring"}
                                         />
                                     </RadioGroup>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        paddingBottom: 2,
-                                    }}
-                                >
-                                    <Typography sx={{ paddingRight: 5 }}>
-                                        {"No of Weeks: "}
-                                    </Typography>
-
-                                    <FormControl>
-                                        <Select
-                                            labelId="select-venue-label"
-                                            id="select-venue-label"
-                                            value={noOfWeeks}
-                                            onChange={handleNoOfWeeksChange}
-                                            sx={{ minWidth: "250px" }}
-                                        >
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        paddingBottom: 2,
-                                    }}
-                                >
-                                    <Typography sx={{ paddingRight: 5 }}>
-                                        {"Payment Type: "}
-                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box
+                                component="form"
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingBottom: 2,
+                                }}
+                            >
+                                {renderFormTitle("No of Weeks")}
+                                <Grid item xs={4} md={8}>
+                                    <Select
+                                        disabled={selectedBooking === "single"}
+                                        labelId="select-venue-label"
+                                        id="select-venue-label"
+                                        value={selectedNoOfWeeks}
+                                        onChange={handleNoOfWeeksChange}
+                                        sx={{ minWidth: "250px" }}
+                                    >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                    </Select>
+                                </Grid>
+                            </Box>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingBottom: 2,
+                                }}
+                            >
+                                {renderFormTitle("Payment")}
+                                <Grid item xs={4} md={8}>
                                     <RadioGroup
                                         row
                                         aria-labelledby="pitch-radio-buttons-group"
@@ -225,28 +266,30 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                             label={"Cash"}
                                         />
                                         <FormControlLabel
+                                            disabled
                                             value={"card"}
                                             control={<Radio />}
                                             label={"Card"}
                                         />
                                     </RadioGroup>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        paddingBottom: 2,
-                                    }}
-                                >
-                                    <Typography sx={{ paddingRight: 5 }}>
-                                        {"Match Type: "}
-                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingBottom: 2,
+                                }}
+                            >
+                                {renderFormTitle("Match")}
+                                <Grid item xs={4} md={8}>
                                     <RadioGroup
                                         row
                                         aria-labelledby="pitch-radio-buttons-group"
-                                        defaultValue="public"
+                                        value={selectedMatchType}
                                         name="radio-buttons-group"
+                                        onChange={handleMatchTypeChange}
                                     >
                                         <FormControlLabel
                                             value={"public"}
@@ -259,61 +302,85 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                             label={"Private"}
                                         />
                                     </RadioGroup>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        paddingBottom: 2,
-                                    }}
-                                >
-                                    <Typography sx={{ paddingRight: 5 }}>
-                                        {"Squad: "}
-                                    </Typography>
-
-                                    <FormControl>
-                                        <Select
-                                            disabled
-                                            labelId="select-venue-label"
-                                            id="select-venue-label"
-                                            value={selectedSquad}
-                                            onChange={handleSelectedSquadChange}
-                                            sx={{ minWidth: "250px" }}
-                                        >
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                            </FormControl>
+                                </Grid>
+                            </Box>
+                            <Box
+                                component="form"
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                {renderFormTitle("Squad")}
+                                <Grid item xs={4} md={8}>
+                                    <Select
+                                        disabled={
+                                            selectedMatchType === "public"
+                                        }
+                                        labelId="select-venue-label"
+                                        id="select-venue-label"
+                                        value={selectedSquad}
+                                        onChange={handleSelectedSquadChange}
+                                        sx={{ minWidth: "250px" }}
+                                    >
+                                        {squadsQuery.data &&
+                                            squadsQuery.data.map((s) => {
+                                                return (
+                                                    <MenuItem
+                                                        key={s.squadId}
+                                                        value={s.squadId}
+                                                    >
+                                                        {s.name}
+                                                    </MenuItem>
+                                                );
+                                            })}
+                                    </Select>
+                                </Grid>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid
-                    item
-                    xs={4}
-                    md={6}
-                    sx={{
-                        borderLeft: 1,
-                        borderBottom: 1,
-                        borderColor: "divider",
-                        paddingBottom: 5,
-                    }}
-                >
-                    <h2>Change Slot</h2>
-                    <VenueBookingGrid
-                        venueId={venueQuery.data.id}
-                        isPitchBookView
-                        openDate={matchDate}
-                    />
-                </Grid>
-                <Grid item xs={4} md={6} />
                 <Grid item xs={4} md={6}>
-                    <Box sx={{ height: 300 }}>
-                        {/* <h2>Order Details</h2> */}
-                    </Box>
+                    <Grid container sx={{ paddingBottom: 2 }}>
+                        <Grid
+                            item
+                            sx={{
+                                borderBottom: 1,
+                                borderColor: "divider",
+                                paddingBottom: 2,
+                            }}
+                        >
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                >
+                                    {renderSectionTitle("Amend Slot")}
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <VenueBookingGrid
+                                        venueId={venueQuery.data.id}
+                                        isPitchBookView
+                                        openDate={matchDate}
+                                    />
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid>
+                        <Grid item xs={6} md={12}>
+                            <BookingOrder
+                                venue={venueQuery.data}
+                                noOfWeeks={selectedNoOfWeeks}
+                                matchType={capitalize(selectedMatchType)}
+                                matchDate={matchDateParam}
+                                paymentType={"Cash"}
+                                squad={getSelectedSquad()}
+                                pitchTimeslot={getSelectedPitch()}
+                            />
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </>

@@ -4,12 +4,8 @@ import { SignInModal } from "./styled";
 import Login from "@/features/auth/components/Login/Login";
 import Register from "@/features/auth/components/Register/Register";
 
-interface SignInProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-}
-
-export default function SignIn({ open, setOpen }: SignInProps) {
+export default function SignIn() {
+    const [open, setOpen] = React.useState(true);
     const [isLoginActive, setIsLoginActive] = React.useState(true);
 
     const handleClose = () => setOpen(false);

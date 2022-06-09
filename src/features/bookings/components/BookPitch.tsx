@@ -24,6 +24,7 @@ import { usePitchesByTimeslots } from "@/features/venues/api/getPitchByTimeslot"
 import _ from "lodash";
 import BookingOrder from "./BookingOrder";
 import BookingBreadcrumb from "./BookingBreadcrumb";
+import { capitalizeFirstLetter } from "@/utils/format";
 
 interface BookPitchProps {
     page: string;
@@ -65,11 +66,6 @@ export const BookPitch = ({ page }: BookPitchProps) => {
             setSelectedPitch(pitchesQuery[0].data.pitch.id);
         }
     }, [pitchesQuery, selectedPitch]);
-
-    const capitalize = (s: string) => {
-        if (typeof s !== "string") return "";
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    };
 
     const handlePitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const typeValue = (event.target as HTMLInputElement).value;
@@ -373,7 +369,9 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                             <BookingOrder
                                 venue={venueQuery.data}
                                 noOfWeeks={selectedNoOfWeeks}
-                                matchType={capitalize(selectedMatchType)}
+                                matchType={capitalizeFirstLetter(
+                                    selectedMatchType
+                                )}
                                 matchDate={matchDateParam}
                                 paymentType={"Cash"}
                                 squad={getSelectedSquad()}

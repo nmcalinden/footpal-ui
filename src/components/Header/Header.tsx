@@ -150,12 +150,7 @@ export const Header = () => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         {user ? getLoggedIn() : getSignIn()}
-                        {openSignInModal && (
-                            <SignIn
-                                open={openSignInModal}
-                                setOpen={setOpenSignInModal}
-                            />
-                        )}
+                        {openSignInModal && <SignIn />}
                     </Box>
                 </Toolbar>
             </Container>

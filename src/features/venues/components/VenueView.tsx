@@ -1,13 +1,13 @@
-import { Box, Breadcrumbs, Grid, Link, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import { useVenue } from "../api/getVenue";
 import { Spinner } from "@/components/Elements";
 import SubHeader from "@/components/Header/SubHeader";
-import { useNavigate } from "react-router-dom";
 import { VenueOpeningHour } from "../types";
 import { useVenueOpeningHours } from "../api/getVenueOpeningHours";
 import VenueBookingGrid from "./VenueBookingGrid";
+import { Breadcrumb, BreadcrumbLink } from "@/components/Breadcrumb";
 
 interface VenueViewProps {
     page: string;
@@ -16,7 +16,6 @@ interface VenueViewProps {
 export const VenueView = ({ page }: VenueViewProps) => {
     let { id } = useParams();
     const theme = useTheme();
-    const navigate = useNavigate();
 
     const venueId: string = id || "";
     const venueQuery = useVenue({ venueId });
@@ -68,25 +67,9 @@ export const VenueView = ({ page }: VenueViewProps) => {
         );
     };
 
-    const capitalize = (s: string) => {
-        if (typeof s !== "string") return "";
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    };
-
-    const venueBreadcrumbs = (name: string, page: string) => {
-        return [
-            <Link
-                underline="hover"
-                key="1"
-                color="inherit"
-                onClick={() => navigate(`/${page}`)}
-            >
-                {capitalize(page)}
-            </Link>,
-            <Typography key="3" color="text.primary">
-                {name}
-            </Typography>,
-        ];
+    const venueBreadcrumbLink = (page: string) => {
+        const link: BreadcrumbLink = { title: page, href: `/${page}` };
+        return [link];
     };
 
     const openingHours = venueOpeningHoursQuery.data || [];
@@ -96,9 +79,10 @@ export const VenueView = ({ page }: VenueViewProps) => {
     return (
         <>
             <SubHeader title={venueQuery.data.name} />
-            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ p: 2 }}>
-                {venueBreadcrumbs(venueQuery.data.name, page)}
-            </Breadcrumbs>
+            <Breadcrumb
+                links={venueBreadcrumbLink(page)}
+                currentPage={venueQuery.data.name}
+            />
             <Grid container spacing={2} sx={{ p: 2 }}>
                 <Grid item xs={4} md={7} justifyContent="center">
                     <h2>Available Bookings</h2>

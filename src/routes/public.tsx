@@ -39,7 +39,10 @@ export const publicRoutes = [
             { path: "/book/:id/pitch", element: <BookPitch page={"book"} /> },
             { path: "/venues", element: <Venues /> },
             { path: "/venues/:id", element: <VenueView page={"venues"} /> },
-            { path: "/venues/:id/pitch", element: <BookPitch page={"venues"} /> },
+            {
+                path: "/venues/:id/pitch",
+                element: <BookPitch page={"venues"} />,
+            },
             { path: "*", element: <Navigate to="/" /> },
         ],
     },

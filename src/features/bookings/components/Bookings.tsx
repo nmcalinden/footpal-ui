@@ -3,6 +3,7 @@ import { Tab, Tabs } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import FindABooking from "./FindABooking";
+import { MyBookings } from "./MyBookings";
 
 const useStyles = makeStyles((theme) => ({
     tabsIndicator: {
@@ -34,7 +35,7 @@ export const Bookings = () => {
             {
                 {
                     0: <FindABooking />,
-                    1: <div />,
+                    1: <MyBookings />,
                 }[value]
             }
         </>

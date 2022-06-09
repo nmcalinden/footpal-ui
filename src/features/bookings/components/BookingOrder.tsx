@@ -3,6 +3,7 @@ import { PitchTimeslot, Venue } from "@/features/venues/types";
 import { Squad } from "@/features/squads";
 import React from "react";
 import { useCreateBooking } from "../api/createBooking";
+import BookingConfirmationDialog from "./BookingConfirmationDialog";
 
 interface BookingOrderProps {
     venue: Venue;
@@ -13,6 +14,19 @@ interface BookingOrderProps {
     matchDate: string;
     paymentType: string;
 }
+
+export const BookingOrderModal = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #5F7161",
+    boxShadow: 24,
+    p: 4,
+    display: "flex",
+};
 
 export const BookingOrder = ({
     venue,
@@ -26,6 +40,8 @@ export const BookingOrder = ({
     const createBookingMutation = useCreateBooking();
 
     const [slot, setSlot] = React.useState("");
+    const [openModal, setOpenModal] = React.useState(false);
+    const [bookingId, setBookingId] = React.useState(0);
 
     React.useEffect(() => {
         if (
@@ -41,6 +57,7 @@ export const BookingOrder = ({
     }, [pitchTimeslot]);
 
     const submitBooking = async () => {
+        setOpenModal(true);
         if (!pitchTimeslot) {
             return;
         }
@@ -53,7 +70,10 @@ export const BookingOrder = ({
             noOfWeeks: parseInt(noOfWeeks),
             squadId: squad?.squadId,
         };
-        await createBookingMutation.mutateAsync({ data: req });
+        await createBookingMutation
+            .mutateAsync({ data: req })
+            .then((res) => setBookingId(res.id))
+            .catch((err) => console.log("Error: ", err));
     };
 
     const renderOrderDetailsRow = (
@@ -111,6 +131,12 @@ export const BookingOrder = ({
 
     return (
         <>
+            <BookingConfirmationDialog
+                bookingId={bookingId}
+                open={openModal}
+                setOpen={setOpenModal}
+                isSubmitLoading={createBookingMutation.isLoading}
+            />
             {renderSectionTitle("Order Details")}
             <Box
                 sx={{
@@ -182,6 +208,7 @@ export const BookingOrder = ({
                     }}
                 >
                     <Button
+                        disabled={createBookingMutation.isSuccess}
                         variant="contained"
                         color="success"
                         onClick={submitBooking}

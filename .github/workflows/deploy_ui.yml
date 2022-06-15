@@ -32,5 +32,8 @@ jobs:
               env:
                   REACT_APP_API_URL: ${{ secrets.API_URL }}
               run: npm i && npm run-script build
+              artifacts:
+                  paths:
+                    - build/
             - name: updated app to s3
-              run: aws s3 sync ./build s3://footpalweb/
+              run: aws s3 sync build/ s3://footpalweb/

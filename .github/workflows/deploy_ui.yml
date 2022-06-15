@@ -7,9 +7,9 @@ on:
 #         paths:
 #             - "ui/**"
 
-# defaults:
-#     run:
-#         working-directory: ./
+defaults:
+    run:
+        working-directory: [base-directory]
 
 jobs:
     deploy:

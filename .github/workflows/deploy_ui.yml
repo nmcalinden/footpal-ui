@@ -35,4 +35,4 @@ jobs:
               env:
                   REACT_APP_API_URL: ${{ secrets.API_URL }}
             - name: updated app to s3
-              run: aws s3 sync ./build s3://foot-pal.com/
+              run: aws s3 sync ./build s3://dev.foot-pal.com/

@@ -3,7 +3,7 @@ name: Deploy UI
 on:
     push:
         branches:
-            - main
+            - qa
 #         paths:
 #             - "ui/**"
 
@@ -33,6 +33,6 @@ jobs:
               id: build-ui
               run: npm run build
               env:
-                  REACT_APP_API_URL: ${{ secrets.API_URL }}
+                  REACT_APP_API_URL: ${{ secrets.QA_API_URL }}
             - name: updated app to s3
-              run: aws s3 sync ./build s3://dev.foot-pal.com/
+              run: aws s3 sync ./build s3://footpal-qa/

@@ -4,8 +4,8 @@ on:
     push:
         branches:
             - main
-#         paths:
-#             - "ui/**"
+        paths:
+            - "ui/**"
 
 defaults:
     run:
@@ -33,6 +33,6 @@ jobs:
               id: build-ui
               run: npm run build
               env:
-                  REACT_APP_API_URL: ${{ secrets.API_URL }}
+                  REACT_APP_API_URL: ${{ secrets.DEV_API_URL }}
             - name: updated app to s3
-              run: aws s3 sync ./build s3://dev.foot-pal.com/
+              run: aws s3 sync ./build s3://footpal-dev/

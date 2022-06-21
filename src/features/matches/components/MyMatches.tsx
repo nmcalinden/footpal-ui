@@ -83,6 +83,7 @@ export const MyMatches = () => {
                 display: "flex",
                 height: 224,
                 marginTop: 2,
+                p: 2,
             }}
         >
             {!matchesQuery.data ? (

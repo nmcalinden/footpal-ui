@@ -9,9 +9,9 @@ import { Spinner } from "@/components/Elements";
 
 const useStyles = makeStyles((theme) => ({
     profile: {
-        backgroundColor: theme.palette.secondary.light,
         border: 1,
-        borderColor: "divider",
+        borderStyle: "solid",
+        borderColor: theme.palette.secondary.light,
         borderRadius: "16px",
         padding: 5,
         paddingLeft: 10,
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     profileHeader: {
         display: "flex",
         flexDirection: "row",
-        paddingLeft: 2,
+        paddingLeft: 10,
         alignItems: "baseline",
     },
 }));
@@ -63,7 +63,7 @@ export default function MyUser() {
     return (
         <Box className={styles.profile}>
             <div className={styles.profileHeader}>
-                <h2>Profile</h2>
+                <h2>User</h2>
                 <Link
                     hidden={!isFormDisabled}
                     component="button"

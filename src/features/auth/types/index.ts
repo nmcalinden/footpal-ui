@@ -2,12 +2,20 @@ export type AuthUser = {
     id: number;
     email: string;
     name: string;
-    roles: string[];
+    nickname: string;
+    phoneNo: string;
+    postcode: string;
+    city: string;
 };
 
 export type UserSession = {
-    access_token: string;
-    refresh_token: string;
+    jwt: JWT;
+    user: AuthUser;
+};
+
+export type JWT = {
+    accessToken: string;
+    refreshToken: string;
 };
 
 export type RegisteredUser = {

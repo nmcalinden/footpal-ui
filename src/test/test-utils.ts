@@ -19,8 +19,9 @@ export const createUser = async (userProperties?: any) => {
 export const loginAsUser = async (user: any) => {
     const encodedToken = jwt.sign(user, JWT_SECRET);
 
-    storage.setToken(encodedToken);
-    return { access_token: encodedToken, refresh_token: encodedToken };
+    storage.setAccessToken(encodedToken);
+    storage.setRefreshToken(encodedToken);
+    return { accessToken: encodedToken, refreshToken: encodedToken };
 };
 
 export const waitForLoadingToFinish = () =>

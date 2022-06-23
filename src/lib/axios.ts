@@ -1,9 +1,10 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import { getApiUrl } from "@/config";
 import storage from "@/utils/storage";
+import { refreshUser } from "@/features/auth/api/refresh";
 
 function authRequestInterceptor(config: AxiosRequestConfig) {
-    const token = storage.getToken();
+    const token = storage.getAccessToken();
     if (!config?.headers) {
         throw new Error(
             `Expected 'config' and 'config.headers' not to be undefined`
@@ -23,10 +24,31 @@ export const axios = Axios.create({
 axios.interceptors.request.use(authRequestInterceptor);
 
 axios.interceptors.response.use(
-    (response) => {
-        return response.data;
-    },
-    (error) => {
-        throw error;
+    (response) => response.data,
+    async (err) => {
+        const originalConfig = err.config;
+
+        if (err.response && err.response.status === 401) {
+            const refreshUrl = "/refresh";
+            const refreshToken = storage.getRefreshToken();
+
+            if (originalConfig.url !== refreshUrl && refreshToken) {
+                try {
+                    const rs = await refreshUser({ refreshToken });
+
+                    console.log("RS: ", rs);
+                    const { accessToken } = rs.jwt;
+
+                    storage.setAccessToken(accessToken);
+                    return axios(originalConfig);
+                } catch (_error) {
+                    console.log("Error: ", _error);
+                    storage.clearTokens();
+                    return Promise.reject(_error);
+                }
+            }
+        }
+
+        return Promise.reject(err);
     }
 );

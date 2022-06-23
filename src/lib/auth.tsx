@@ -1,25 +1,31 @@
 import { initReactQueryAuth } from "react-query-auth";
 import { Spinner } from "@/components/Elements";
 import {
-    getUserProfile,
     loginWithEmailAndPassword,
     registerUser,
     UserSession,
     LoginCredentialsDTO,
     RegisterCredentialsDTO,
     AuthUser,
+    getUser,
 } from "@/features/auth";
 import storage from "@/utils/storage";
+import TokenUtil from "@/utils/jwt";
 
 async function handleUserResponse(data: UserSession) {
-    const { access_token } = data;
-    storage.setToken(access_token);
-    return getUserProfile(access_token);
+    const { jwt, user } = data;
+    storage.setAccessToken(jwt.accessToken);
+    storage.setRefreshToken(jwt.refreshToken);
+    return user;
 }
 
 async function loadUser() {
-    if (storage.getToken()) {
-        return getUserProfile(storage.getToken());
+    if (
+        storage.getAccessToken() ||
+        !TokenUtil.isTokenExpired(storage.getRefreshToken())
+    ) {
+        const data = await getUser();
+        return data;
     }
     return null;
 }
@@ -36,7 +42,8 @@ async function registerFn(data: RegisterCredentialsDTO) {
 }
 
 async function logoutFn() {
-    storage.clearToken();
+    storage.clearAccessToken();
+    loadUser();
     window.location.assign(window.location.origin as unknown as string);
 }
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Stack, Box, Button, Grid, Link, TextField } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { useUser } from "@/features/profile/api/getUser";
 import { useUpdatePlayer } from "@/features/profile/api/updatePlayer";
 
 import { useForm, Controller } from "react-hook-form";
 import { Spinner } from "@/components/Elements";
+import { useAuth } from "@/lib/auth";
 
 const useStyles = makeStyles((theme) => ({
     profile: {
@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MyUser() {
-    const { data, isLoading } = useUser();
+    const { user } = useAuth();
     const updatePlayerMutation = useUpdatePlayer();
 
     const { handleSubmit, control, reset } = useForm({
         defaultValues: React.useMemo(() => {
-            return data;
-        }, [data]),
+            return user || undefined;
+        }, [user]),
     });
 
     React.useEffect(() => {
-        reset(data);
-    }, [data, reset]);
+        reset(user || undefined);
+    }, [user, reset]);
 
     const styles = useStyles();
 
@@ -74,7 +74,7 @@ export default function MyUser() {
                     Edit
                 </Link>
             </div>
-            {isLoading ? (
+            {!user ? (
                 <Spinner />
             ) : (
                 <>

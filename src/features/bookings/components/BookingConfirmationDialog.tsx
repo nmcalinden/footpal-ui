@@ -1,5 +1,5 @@
 import { Spinner } from "@/components/Elements";
-import { useUser } from "@/features/profile/api/getUser";
+import { useAuth } from "@/lib/auth";
 import { useTheme } from "@material-ui/core/styles";
 import {
     Button,
@@ -24,7 +24,7 @@ export const BookingConfirmationDialog = ({
     isSubmitLoading,
     setOpen,
 }: BookingConfirmationProps) => {
-    const { data, isLoading } = useUser();
+    const { user } = useAuth();
     const theme = useTheme();
     const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export const BookingConfirmationDialog = ({
         >
             <DialogTitle id="confirm-dialog">Booking Confirmation</DialogTitle>
             <DialogContent>
-                {isLoading || isSubmitLoading ? (
+                {!user || isSubmitLoading ? (
                     <Spinner />
                 ) : (
                     <>
@@ -49,7 +49,7 @@ export const BookingConfirmationDialog = ({
 
                         <p>Booking Ref: #{bookingId}</p>
                         <p>
-                            A confirmation email will be sent to: {data?.email}
+                            A confirmation email will be sent to: {user.email}
                         </p>
                     </>
                 )}

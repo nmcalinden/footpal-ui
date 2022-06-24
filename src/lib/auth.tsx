@@ -24,7 +24,9 @@ async function loadUser() {
         storage.getAccessToken() ||
         !TokenUtil.isTokenExpired(storage.getRefreshToken())
     ) {
-        const data = await getUser();
+        const data = await getUser()
+            .then((res) => res)
+            .catch(() => null);
         return data;
     }
     return null;

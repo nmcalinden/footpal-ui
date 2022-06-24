@@ -118,7 +118,6 @@ export const MyBookings = () => {
         return <Spinner />;
     }
 
-    console.log("Selected Row:", selectedRow);
     return (
         <Box
             sx={{

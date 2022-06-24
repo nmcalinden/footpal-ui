@@ -27,7 +27,6 @@ axios.interceptors.response.use(
     (response) => response.data,
     async (err) => {
         const originalConfig = err.config;
-
         if (err.response && err.response.status === 401) {
             const refreshUrl = "/refresh";
             const refreshToken = storage.getRefreshToken();
@@ -35,14 +34,11 @@ axios.interceptors.response.use(
             if (originalConfig.url !== refreshUrl && refreshToken) {
                 try {
                     const rs = await refreshUser({ refreshToken });
-
-                    console.log("RS: ", rs);
                     const { accessToken } = rs.jwt;
 
                     storage.setAccessToken(accessToken);
                     return axios(originalConfig);
                 } catch (_error) {
-                    console.log("Error: ", _error);
                     storage.clearTokens();
                     return Promise.reject(_error);
                 }

@@ -3,7 +3,6 @@ import { Stack, Button, Link, TextField, Alert } from "@mui/material";
 import { LoginCredentialsDTO } from "../../api/login";
 import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@/lib/auth";
-import { useNavigate } from "react-router-dom";
 
 interface LoginProps {
     openRegister: () => void;
@@ -12,7 +11,6 @@ interface LoginProps {
 
 export default function Login({ openRegister, closeModal }: LoginProps) {
     const { login } = useAuth();
-    const navigate = useNavigate();
     const { handleSubmit, control } = useForm();
     const [loginError, setLoginError] = React.useState("");
 
@@ -22,7 +20,7 @@ export default function Login({ openRegister, closeModal }: LoginProps) {
 
     const loginUser = async (data: LoginCredentialsDTO) => {
         await login(data)
-            .then(() => navigate("/profile"))
+            .then(() => closeModal())
             .catch(function (error) {
                 setLoginError(error.response.data);
             });

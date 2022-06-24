@@ -59,6 +59,8 @@ export const Header = () => {
     };
 
     const handleOpenSignIn = () => setOpenSignInModal(true);
+    const handleCloseSignIn = () => setOpenSignInModal(false);
+
     const handleLogout = () => logout();
 
     const getSignIn = () => {
@@ -128,8 +130,6 @@ export const Header = () => {
         );
     };
 
-    console.log("User: ", user);
-
     return (
         <AppBar position="static" className={styles.appBar}>
             <Container maxWidth="xl">
@@ -166,7 +166,9 @@ export const Header = () => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         {user ? getLoggedIn() : getSignIn()}
-                        {openSignInModal && <SignIn />}
+                        {openSignInModal && (
+                            <SignIn handleCloseSignIn={handleCloseSignIn} />
+                        )}
                     </Box>
                 </Toolbar>
             </Container>

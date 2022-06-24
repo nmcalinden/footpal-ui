@@ -14,6 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
 import SignIn from "@/features/auth/components/SignIn/SignIn";
+import storage from "@/utils/storage";
+import TokenUtil from "@/utils/jwt";
+import { refreshUser } from "@/features/auth/api/refresh";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -30,6 +33,17 @@ export const Header = () => {
         null
     );
     const [openSignInModal, setOpenSignInModal] = React.useState(false);
+
+    React.useEffect(() => {
+        const refresh = async () => {
+            const refreshToken = storage.getRefreshToken();
+            await refreshUser({ refreshToken });
+        };
+        const aT = storage.getAccessToken();
+        if (aT && TokenUtil.isTokenExpired(aT)) {
+            refresh().catch(() => logout());
+        }
+    }, []);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -113,6 +127,8 @@ export const Header = () => {
             </>
         );
     };
+
+    console.log("User: ", user);
 
     return (
         <AppBar position="static" className={styles.appBar}>

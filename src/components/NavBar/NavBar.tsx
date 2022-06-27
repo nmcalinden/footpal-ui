@@ -20,7 +20,6 @@ function LinkTab(props: any) {
             to={props.pathname}
             {...props}
             sx={{ width: "150px" }}
-            onClick={() => props.setNavBarOpen(false)}
         />
     );
 }
@@ -69,25 +68,11 @@ export const NavBar = ({ navBarOpen, setNavBarOpen }: NavBarProps) => {
                 classes={{
                     indicator: styles.tabsIndicator,
                 }}
+                onClick={() => setNavBarOpen(false)}
             >
-                <LinkTab
-                    label="Home"
-                    pathname="/"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(0)}
-                />
-                <LinkTab
-                    label="Book"
-                    pathname="/book"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(1)}
-                />
-                <LinkTab
-                    label="Venues"
-                    pathname="/venues"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(2)}
-                />
+                <LinkTab label="Home" pathname="/" {...tabProps(0)} />
+                <LinkTab label="Book" pathname="/book" {...tabProps(1)} />
+                <LinkTab label="Venues" pathname="/venues" {...tabProps(2)} />
             </Tabs>
         );
     };
@@ -115,40 +100,19 @@ export const NavBar = ({ navBarOpen, setNavBarOpen }: NavBarProps) => {
                     indicator: styles.tabsIndicator,
                 }}
             >
-                <LinkTab
-                    label="Home"
-                    pathname="/"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(0)}
-                />
+                <LinkTab label="Home" pathname="/" {...tabProps(0)} />
                 <LinkTab
                     label="My Profile"
                     pathname="/profile"
-                    setNavBarOpen={setNavBarOpen}
                     {...tabProps(1)}
                 />
-                <LinkTab
-                    label="Book"
-                    pathname="/book"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(2)}
-                />
-                <LinkTab
-                    label="Venues"
-                    pathname="/venues"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(3)}
-                />
-                <LinkTab
-                    label="Matches"
-                    pathname="/matches"
-                    setNavBarOpen={setNavBarOpen}
-                    {...tabProps(4)}
-                />
+                <LinkTab label="Book" pathname="/book" {...tabProps(2)} />
+                <LinkTab label="Venues" pathname="/venues" {...tabProps(3)} />
+                <LinkTab label="Matches" pathname="/matches" {...tabProps(4)} />
                 <LinkTab
                     label="Squads"
                     pathname="/squads"
-                    setNavBarOpen={setNavBarOpen}
+                    setnavbaropen={setNavBarOpen}
                     {...tabProps(5)}
                 />
             </Tabs>

@@ -13,7 +13,10 @@ const FindABooking = () => {
 
     return (
         <>
-            <Grid container sx={{ p: 2 }}>
+            <Grid
+                container
+                sx={{ p: 2, justifyContent: { xs: "center", md: "normal" } }}
+            >
                 <Search />
                 <VenueList page={"book"} data={venues.data} />
             </Grid>

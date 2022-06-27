@@ -1,37 +1,56 @@
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Link, Pagination } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Venue } from "@/features/venues/types";
-import VenueBox from "./VenueBox";
 
 interface VenueListProps {
     page: string;
     data: Venue[] | undefined;
 }
 
+const columns: GridColDef[] = [
+    {
+        flex: 1,
+        field: "name",
+        headerName: "Venue",
+    },
+    {
+        flex: 1,
+        field: "city",
+        headerName: "City",
+    },
+    {
+        field: "view",
+        headerName: "",
+        flex: 1,
+        renderCell: () => <Link component="button">View</Link>,
+    },
+];
+
 const VenueList = ({ page, data }: VenueListProps) => {
-    const getVenueView = (data: Venue, index: number) => {
-        return (
+    return (
+        <Grid container spacing={4} sx={{ paddingTop: 4 }}>
             <Grid
                 item
-                xs={6}
-                sm={3}
-                md={3}
-                key={index}
+                xs={12}
+                sm={12}
+                md={12}
                 sx={{
                     paddingTop: 2,
                     paddingBottom: 5,
+                    height: "400px",
                 }}
             >
-                <VenueBox page={page} data={data} />
+                {data && (
+                    <DataGrid
+                        rows={data}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        getRowId={(row) => row.id}
+                        disableSelectionOnClick
+                    />
+                )}
             </Grid>
-        );
-    };
-
-    return (
-        <Grid container spacing={4} sx={{ paddingTop: 4 }}>
-            {data &&
-                data.map((venue, index) => {
-                    return getVenueView(venue, index);
-                })}
             <Grid
                 item
                 xs={12}

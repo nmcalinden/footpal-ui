@@ -46,7 +46,6 @@ async function registerFn(data: RegisterCredentialsDTO) {
 async function logoutFn() {
     storage.clearAccessToken();
     loadUser();
-    window.location.assign(window.location.origin as unknown as string);
 }
 
 const authConfig = {

@@ -12,7 +12,7 @@ const VenueList = ({ page, data }: VenueListProps) => {
         return (
             <Grid
                 item
-                xs={2}
+                xs={6}
                 sm={3}
                 md={3}
                 key={index}
@@ -34,7 +34,7 @@ const VenueList = ({ page, data }: VenueListProps) => {
                 })}
             <Grid
                 item
-                xs={10}
+                xs={12}
                 sm={12}
                 md={12}
                 sx={{ display: "flex", justifyContent: "center" }}

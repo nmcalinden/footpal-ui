@@ -32,19 +32,24 @@ export const Venues = () => {
     return (
         <>
             <SubHeader title={"Venues"} />
-            <Grid container spacing={2} sx={{ paddingTop: 2 }}>
+            <Grid container sx={{ paddingTop: 2 }}>
                 <Grid
                     item
-                    xs={4}
+                    xs={6}
                     sm={6}
                     md={6}
-                    sx={{ display: "flex", justifyContent: "flex-start" }}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                    }}
                 >
                     <Autocomplete
                         id="free-solo-demo"
                         freeSolo
                         options={["Belfast", "Lurgan"].map((option) => option)}
-                        sx={{ minWidth: "350px" }}
+                        sx={{
+                            minWidth: { xs: "150px", md: "350px" },
+                        }}
                         renderInput={(params) => (
                             <TextField {...params} label="Search Venue" />
                         )}
@@ -52,10 +57,14 @@ export const Venues = () => {
                 </Grid>
                 <Grid
                     item
-                    xs={4}
+                    xs={6}
                     sm={6}
                     md={6}
-                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        padddingLeft: 0,
+                    }}
                 >
                     <TablePagination
                         rowsPerPageOptions={[8, 16, 24]}

@@ -80,10 +80,13 @@ export default function MyUser() {
                 <>
                     <Grid
                         container
-                        spacing={5}
-                        sx={{ paddingLeft: 4, paddingRight: 4 }}
+                        spacing={3}
+                        sx={{
+                            paddingLeft: { xs: 0, md: 4 },
+                            paddingRight: { xs: 0, md: 4 },
+                        }}
                     >
-                        <Grid item xs={8} md={12}>
+                        <Grid item xs={6} md={12}>
                             <Controller
                                 name="name"
                                 control={control}
@@ -102,7 +105,7 @@ export default function MyUser() {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={8} md={12}>
+                        <Grid item xs={6} md={12}>
                             <Controller
                                 name="email"
                                 control={control}
@@ -121,7 +124,7 @@ export default function MyUser() {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={2} md={5}>
+                        <Grid item xs={6} md={5}>
                             <Controller
                                 name="nickname"
                                 control={control}
@@ -148,7 +151,7 @@ export default function MyUser() {
                             />
                         </Grid>
                         <Grid item xs={1} md={1} />
-                        <Grid item xs={2} md={6}>
+                        <Grid item xs={6} md={6}>
                             <Controller
                                 name="phoneNo"
                                 control={control}
@@ -174,7 +177,7 @@ export default function MyUser() {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={2} md={5}>
+                        <Grid item xs={6} md={5}>
                             <Controller
                                 name="city"
                                 control={control}
@@ -201,7 +204,7 @@ export default function MyUser() {
                             />
                         </Grid>
                         <Grid item xs={1} md={1} />
-                        <Grid item xs={2} md={6}>
+                        <Grid item xs={6} md={6}>
                             <Controller
                                 name="postcode"
                                 control={control}

@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         backgroundColor: theme.palette.secondary.main,
         display: "flex",
-        height: 80,
+        height: "10%",
         padding: 10,
         borderBottom: 1,
         borderColor: "divider",
@@ -22,7 +22,7 @@ const SubHeader = ({ title }: SubHeaderProps) => {
     const styles = useStyles();
 
     return (
-        <Grid item xs={10} md={12}>
+        <Grid item xs={12} md={12}>
             <Box className={styles.title}>
                 <h1>{title}</h1>
             </Box>

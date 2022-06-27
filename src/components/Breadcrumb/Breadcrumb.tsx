@@ -15,7 +15,7 @@ export interface BreadcrumbLink {
 export const Breadcrumb = ({ links, currentPage }: BreadcrumbProps) => {
     const navigate = useNavigate();
     return (
-        <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ p: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ p: 1 }}>
             [
             {links &&
                 links.map((l) => {

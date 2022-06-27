@@ -36,10 +36,10 @@ export const Profile = () => {
     const renderMyProfile = () => {
         return (
             <Grid container spacing={2} sx={{ paddingTop: 2 }}>
-                <Grid item xs={4} md={7}>
+                <Grid item xs={12} md={7}>
                     <MyProfile />
                 </Grid>
-                <Grid item xs={4} md={5} justifyContent="flex-end">
+                <Grid item xs={12} md={5} justifyContent="flex-end">
                     <h2>My Squad(s)</h2>
                     <MySquads />
                 </Grid>
@@ -88,8 +88,8 @@ export const Profile = () => {
     return (
         <>
             <SubHeader title={"My Profile"} />
-            <Grid container spacing={2} sx={{ p: 3 }}>
-                <Grid item xs={10} md={12} justifyContent="center">
+            <Grid container spacing={2} sx={{ p: 2 }}>
+                <Grid item xs={12} md={12} justifyContent="center">
                     <Box sx={{ width: "100%" }}>
                         <Tabs
                             onChange={handleMainTabChange}

@@ -84,19 +84,23 @@ export const BookingOrder = ({
     ) => {
         return (
             <Box
-                sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "row", md: "row" },
+                    marginBottom: 2,
+                }}
             >
-                <Grid item xs={2} md={2}>
+                <Grid item xs={6} md={2}>
                     <Typography>{`${field1}:`}</Typography>
                 </Grid>
-                <Grid item xs={3} md={7}>
+                <Grid item xs={6} md={7}>
                     <Typography>{value1}</Typography>
                 </Grid>
-                <Grid item xs={1} md={2} />
-                <Grid item xs={2} md={2}>
+                <Grid item xs={0} md={2} />
+                <Grid item xs={6} md={2}>
                     <Typography>{`${field2}:`}</Typography>
                 </Grid>
-                <Grid item xs={3} md={3}>
+                <Grid item xs={6} md={3}>
                     <Typography>{value2}</Typography>
                 </Grid>
             </Box>
@@ -191,7 +195,7 @@ export const BookingOrder = ({
                         component="div"
                     >{`Total Cost: £${pitchTimeslot.pitch?.cost}`}</Typography>
                 </Box>
-                <Grid item xs={6} md={12} sx={{ marginTop: 3 }}>
+                <Grid item xs={12} md={12} sx={{ marginTop: 3 }}>
                     <Typography>
                         {
                             "Please review order details before booking. Once reviewed, click 'Book' to process order."

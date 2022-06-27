@@ -2,30 +2,31 @@ import { Box, Grid, Typography } from "@mui/material";
 import { Search } from "@/components/Search";
 
 export const Home = () => {
-    
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={10} md={12}>
-                <Box
+        <Grid container>
+            <Grid item xs={12} sm={12} md={12}>
+                <Typography
+                    variant="h4"
+                    textAlign="center"
                     sx={{
                         bgcolor: "default",
                         display: "flex",
                         height: 60,
-                        p: 2,
                         justifyContent: "center",
+                        width: "100%",
                     }}
+                    data-testid={"home-title"}
                 >
-                    <h1 data-testid={"home-title"}>Footpal</h1>
-                </Box>
+                    Footpal
+                </Typography>
+            </Grid>
+            <Grid item xs={12} md={12}>
                 <Box
                     sx={{
                         bgcolor: "default",
                         display: "flex",
-                        flexDirection: "column",
-                        p: 2,
-                        marginTop: 5,
-                        marginLeft: 10,
-                        marginRight: 10,
+                        flexDirection: { xs: "column", md: "column" },
+                        marginTop: { xs: 2, md: 5 },
                         justifyContent: "center",
                         alignItems: "center",
                         border: 1,
@@ -33,7 +34,11 @@ export const Home = () => {
                         borderRadius: 8,
                     }}
                 >
-                    <Typography textAlign="center" variant="h6" sx={{ m: 2 }}>
+                    <Typography
+                        textAlign="center"
+                        variant="h6"
+                        sx={{ paddingTop: 2 }}
+                    >
                         Find a Pitch
                     </Typography>
                     <Search />

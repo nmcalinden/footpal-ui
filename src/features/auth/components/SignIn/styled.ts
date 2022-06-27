@@ -9,4 +9,7 @@ export const SignInModal = {
     boxShadow: 24,
     p: 4,
     display: "flex",
+    "@media (max-width: 600px)": {
+        width: 250
+    },
 };

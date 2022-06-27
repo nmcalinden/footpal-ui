@@ -32,10 +32,10 @@ export const VenueView = ({ page }: VenueViewProps) => {
             <Box
                 sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}
             >
-                <Grid item xs={3} md={4}>
+                <Grid item xs={6} md={4}>
                     <Typography>{`${field}:`}</Typography>
                 </Grid>
-                <Grid item xs={3} md={4}>
+                <Grid item xs={6} md={4}>
                     <Typography>{value}</Typography>
                 </Grid>
             </Box>
@@ -54,13 +54,13 @@ export const VenueView = ({ page }: VenueViewProps) => {
                 key={dayOfWeek}
                 sx={{ display: "flex", flexDirection: "row", marginBottom: 1 }}
             >
-                <Grid item xs={3} md={4}>
+                <Grid item xs={8} md={4}>
                     <Typography>{field}</Typography>
                 </Grid>
                 <Grid item xs={2} md={3}>
                     <Typography>{dayOfWeek}</Typography>
                 </Grid>
-                <Grid item xs={2} md={3}>
+                <Grid item xs={6} md={3}>
                     <Typography>{time}</Typography>
                 </Grid>
             </Box>
@@ -84,11 +84,11 @@ export const VenueView = ({ page }: VenueViewProps) => {
                 currentPage={venueQuery.data.name}
             />
             <Grid container spacing={2} sx={{ p: 2 }}>
-                <Grid item xs={4} md={7} justifyContent="center">
+                <Grid item xs={12} md={7} justifyContent="center">
                     <h2>Available Bookings</h2>
                     <VenueBookingGrid venueId={venueQuery.data.id} />
                 </Grid>
-                <Grid item xs={4} md={5}>
+                <Grid item xs={12} md={5}>
                     <h2>Contact Us</h2>
                     <Box
                         sx={{

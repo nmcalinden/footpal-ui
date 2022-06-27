@@ -3,6 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { makeStyles } from "@material-ui/core/styles";
 
+interface NavBarProps {
+    setNavBarOpen: (navBarOpen: boolean) => void;
+    navBarOpen: boolean;
+}
 const useStyles = makeStyles((theme) => ({
     tabsIndicator: {
         backgroundColor: theme.palette.secondary.light,
@@ -16,6 +20,7 @@ function LinkTab(props: any) {
             to={props.pathname}
             {...props}
             sx={{ width: "150px" }}
+            onClick={() => props.setNavBarOpen(false)}
         />
     );
 }
@@ -30,7 +35,7 @@ function tabProps(index: number) {
 const homeNavBar = ["", "book", "venues"];
 const authNavBar = ["", "profile", "book", "venues", "matches", "squads"];
 
-export const NavBar = () => {
+export const NavBar = ({ navBarOpen, setNavBarOpen }: NavBarProps) => {
     const { user } = useAuth();
     const location = useLocation();
     const styles = useStyles();
@@ -45,65 +50,108 @@ export const NavBar = () => {
     const value = getTabValue(location.pathname);
     const HomeNavBar = () => {
         return (
-            <>
-                <Tabs
-                    orientation="vertical"
-                    variant="standard"
-                    value={value}
-                    sx={{ borderRight: 1, borderColor: "divider" }}
-                    classes={{
-                        indicator: styles.tabsIndicator,
-                    }}
-                >
-                    <LinkTab label="Home" pathname="/" {...tabProps(0)} />
-                    <LinkTab label="Book" pathname="/book" {...tabProps(1)} />
-                    <LinkTab
-                        label="Venues"
-                        pathname="/venues"
-                        {...tabProps(2)}
-                    />
-                </Tabs>
-            </>
+            <Tabs
+                orientation="vertical"
+                variant="standard"
+                value={value}
+                sx={{
+                    borderRight: { xs: navBarOpen ? 1 : 0, md: 1 },
+                    borderColor: {
+                        xs: navBarOpen ? "divider" : "none",
+                        md: "divider",
+                    },
+                    width: {
+                        xs: navBarOpen ? "100%" : "0%",
+                        md: "10%",
+                    },
+                    overflow: "visible",
+                }}
+                classes={{
+                    indicator: styles.tabsIndicator,
+                }}
+            >
+                <LinkTab
+                    label="Home"
+                    pathname="/"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(0)}
+                />
+                <LinkTab
+                    label="Book"
+                    pathname="/book"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(1)}
+                />
+                <LinkTab
+                    label="Venues"
+                    pathname="/venues"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(2)}
+                />
+            </Tabs>
         );
     };
 
     const AuthNavBar = () => {
         return (
-            <>
-                <Tabs
-                    orientation="vertical"
-                    variant="standard"
-                    value={value}
-                    aria-label="Vertical tabs example"
-                    sx={{ borderRight: 1, borderColor: "divider" }}
-                    classes={{
-                        indicator: styles.tabsIndicator,
-                    }}
-                >
-                    <LinkTab label="Home" pathname="/" {...tabProps(0)} />
-                    <LinkTab
-                        label="My Profile"
-                        pathname="/profile"
-                        {...tabProps(1)}
-                    />
-                    <LinkTab label="Book" pathname="/book" {...tabProps(2)} />
-                    <LinkTab
-                        label="Venues"
-                        pathname="/venues"
-                        {...tabProps(3)}
-                    />
-                    <LinkTab
-                        label="Matches"
-                        pathname="/matches"
-                        {...tabProps(4)}
-                    />
-                    <LinkTab
-                        label="Squads"
-                        pathname="/squads"
-                        {...tabProps(5)}
-                    />
-                </Tabs>
-            </>
+            <Tabs
+                orientation="vertical"
+                variant="standard"
+                value={value}
+                aria-label="Vertical tabs example"
+                sx={{
+                    borderRight: { xs: navBarOpen ? 1 : 0, md: 1 },
+                    borderColor: {
+                        xs: navBarOpen ? "divider" : "none",
+                        md: "divider",
+                    },
+                    width: {
+                        xs: navBarOpen ? "100%" : "0%",
+                        md: "10%",
+                    },
+                    overflow: "visible",
+                }}
+                classes={{
+                    indicator: styles.tabsIndicator,
+                }}
+            >
+                <LinkTab
+                    label="Home"
+                    pathname="/"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(0)}
+                />
+                <LinkTab
+                    label="My Profile"
+                    pathname="/profile"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(1)}
+                />
+                <LinkTab
+                    label="Book"
+                    pathname="/book"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(2)}
+                />
+                <LinkTab
+                    label="Venues"
+                    pathname="/venues"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(3)}
+                />
+                <LinkTab
+                    label="Matches"
+                    pathname="/matches"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(4)}
+                />
+                <LinkTab
+                    label="Squads"
+                    pathname="/squads"
+                    setNavBarOpen={setNavBarOpen}
+                    {...tabProps(5)}
+                />
+            </Tabs>
         );
     };
 

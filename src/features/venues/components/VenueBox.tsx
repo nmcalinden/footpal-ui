@@ -24,7 +24,9 @@ const VenueBox = ({ page, data }: VenueBoxProps) => {
                 p: 2,
                 textAlign: "center",
                 minHeight: 100,
-                maxHeight: 100,
+                maxHeight: 120,
+                display: "flex",
+                flexDirection: "column",
             }}
         >
             <Typography>{data.name}</Typography>

@@ -118,7 +118,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
 
     const renderFormTitle = (title: string) => {
         return (
-            <Grid item xs={2} md={4}>
+            <Grid item xs={6} md={4}>
                 <Typography>{`${title}: `}</Typography>
             </Grid>
         );
@@ -151,14 +151,18 @@ export const BookPitch = ({ page }: BookPitchProps) => {
             <Grid container spacing={2} sx={{ p: 2 }}>
                 <Grid
                     item
-                    xs={4}
+                    xs={12}
                     md={6}
                     justifyContent="center"
-                    sx={{ borderRight: 1, borderColor: "divider", p: 2 }}
+                    sx={{
+                        borderRight: { xs: 0, md: 1 },
+                        borderColor: { xs: "none", md: "divider" },
+                        p: 2,
+                    }}
                 >
                     <Grid container sx={{ paddingBottom: 2 }}>
-                        <Grid item xs={6} md={12}>
-                            <Grid item xs={6} md={12}>
+                        <Grid item xs={12} md={12}>
+                            <Grid item xs={12} md={12}>
                                 {renderSectionTitle("Select Pitch")}
                                 {pitchesQuery && (
                                     <RadioGroup
@@ -195,7 +199,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                 }}
                             >
                                 {renderFormTitle("Booking")}
-                                <Grid item xs={4} md={8}>
+                                <Grid item xs={12} md={8}>
                                     <RadioGroup
                                         row
                                         aria-labelledby="pitch-radio-buttons-group"
@@ -226,14 +230,19 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                 }}
                             >
                                 {renderFormTitle("No of Weeks")}
-                                <Grid item xs={4} md={8}>
+                                <Grid item xs={6} md={8}>
                                     <Select
                                         disabled={selectedBooking === "single"}
                                         labelId="select-venue-label"
                                         id="select-venue-label"
                                         value={selectedNoOfWeeks}
                                         onChange={handleNoOfWeeksChange}
-                                        sx={{ minWidth: "250px" }}
+                                        sx={{
+                                            minWidth: {
+                                                xs: "100px",
+                                                md: "250px",
+                                            },
+                                        }}
                                     >
                                         <MenuItem value={1}>1</MenuItem>
                                         <MenuItem value={2}>2</MenuItem>
@@ -309,7 +318,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                 }}
                             >
                                 {renderFormTitle("Squad")}
-                                <Grid item xs={4} md={8}>
+                                <Grid item xs={6} md={8}>
                                     <Select
                                         disabled={
                                             selectedMatchType === "public"
@@ -318,7 +327,12 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                         id="select-venue-label"
                                         value={selectedSquad}
                                         onChange={handleSelectedSquadChange}
-                                        sx={{ minWidth: "250px" }}
+                                        sx={{
+                                            minWidth: {
+                                                xs: "150px",
+                                                md: "250px",
+                                            },
+                                        }}
                                     >
                                         {squadsQuery.data &&
                                             squadsQuery.data.map((s) => {
@@ -338,7 +352,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={4} md={6}>
+                <Grid item xs={12} md={6}>
                     <Grid container sx={{ paddingBottom: 2 }}>
                         <Grid
                             item
@@ -347,6 +361,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                 borderColor: "divider",
                                 paddingBottom: 2,
                             }}
+                            xs={12}
                         >
                             <Accordion>
                                 <AccordionSummary
@@ -365,7 +380,7 @@ export const BookPitch = ({ page }: BookPitchProps) => {
                                 </AccordionDetails>
                             </Accordion>
                         </Grid>
-                        <Grid item xs={6} md={12}>
+                        <Grid item xs={12} md={12}>
                             <BookingOrder
                                 venue={venueQuery.data}
                                 noOfWeeks={selectedNoOfWeeks}

@@ -187,7 +187,7 @@ export const VenueBookingGrid = ({
     return (
         <>
             <Grid container sx={{ paddingBottom: 2 }}>
-                <Grid item xs={2} md={8}>
+                <Grid item xs={6} md={8}>
                     <Button
                         variant="text"
                         onClick={handleDateBackClick}
@@ -205,7 +205,7 @@ export const VenueBookingGrid = ({
                 </Grid>
                 <Grid
                     item
-                    xs={2}
+                    xs={6}
                     md={4}
                     sx={{ display: "flex", justifyContent: "right" }}
                 >

@@ -9,7 +9,7 @@ export const Squads = () => {
             <Grid container spacing={2} sx={{ p: 3 }}>
                 <Grid
                     item
-                    xs={6}
+                    xs={12}
                     md={8}
                     justifyContent="flex-end"
                     sx={{ padding: 3 }}
@@ -19,7 +19,7 @@ export const Squads = () => {
                 </Grid>
                 <Grid
                     item
-                    xs={6}
+                    xs={12}
                     md={8}
                     justifyContent="flex-end"
                     sx={{ padding: 3 }}

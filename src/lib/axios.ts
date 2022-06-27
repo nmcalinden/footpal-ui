@@ -2,6 +2,7 @@ import Axios, { AxiosRequestConfig } from "axios";
 import { getApiUrl } from "@/config";
 import storage from "@/utils/storage";
 import { refreshUser } from "@/features/auth/api/refresh";
+import TokenUtil from "@/utils/jwt";
 
 function authRequestInterceptor(config: AxiosRequestConfig) {
     const token = storage.getAccessToken();
@@ -31,7 +32,11 @@ axios.interceptors.response.use(
             const refreshUrl = "/refresh";
             const refreshToken = storage.getRefreshToken();
 
-            if (originalConfig.url !== refreshUrl && refreshToken) {
+            if (
+                originalConfig.url !== refreshUrl &&
+                refreshToken &&
+                !TokenUtil.isTokenExpired(refreshToken)
+            ) {
                 try {
                     const rs = await refreshUser({ refreshToken });
                     const { accessToken } = rs.jwt;
